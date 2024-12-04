@@ -5,7 +5,7 @@
 export type Meal = {
   idMeal: string;
   strMeal: string;
-  strDrinkAlternate: string;
+  strDrinkAlternate?: string;
   strCategory: string;
   strArea: string;
   strInstructions: string;
@@ -53,9 +53,9 @@ export type Meal = {
   strMeasure19: string;
   strMeasure20: string;
   strSource: string;
-  strImageSource: string;
-  strCreativeCommonsConfirmed: string;
-  dateModified: string;
+  strImageSource?: string;
+  strCreativeCommonsConfirmed?: string;
+  dateModified?: string;
 };
 
 export type Config = {
