@@ -57,3 +57,7 @@ export type Meal = {
   strCreativeCommonsConfirmed: string;
   dateModified: string;
 };
+
+export type Config = {
+  API_URL: string;
+};

@@ -1,7 +1,5 @@
-import { Meal } from "../entities/vite-env";
-
-export const getLocalStorage = (): Meal[] => {
-    return localStorage.getItem("list")
-      ? JSON.parse(localStorage.getItem("list")!)
-      : [];
-  };
+export const getLocalStorage = <T>(key: string): T | null => {
+  return localStorage.getItem(key)
+    ? JSON.parse(localStorage.getItem(key)!)
+    : null;
+};

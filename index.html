@@ -26,9 +26,7 @@
       class="flex items-center justify-center absolute bottom-0 right-0 w-full h-16 opacity-0 transition-opacity"
       id="alert"
     >
-      <h2 class="text-white font-semibold text-lg" id="alert-text">
-        There is not meal with that name
-      </h2>
+      <h2 class="text-white font-semibold text-lg" id="alert-text"></h2>
     </div>
 
     <main class="flex flex-col items-center justify-around w-full h-full p-2">
@@ -45,6 +43,7 @@
             type="submit"
             class="bg-[#BBE2EC] w-[20%] text-white rounded-br-lg rounded-tr-lg cursor-pointer p-2 active:scale-75 transition-all"
             id="button-form"
+            aria-label="search meal"
           >
             <i class="fa fa-search" aria-hidden="true"></i>
           </button>
@@ -69,6 +68,7 @@
           type="button"
           class="bg-red-600 rounded-full h-14 w-14 text-white text-lg cursor-pointer active:scale-75 transition-all"
           id="like-meal"
+          aria-label="like meal"
         >
           <i class="fa fa-heart" aria-hidden="true"></i>
         </button>
@@ -78,6 +78,7 @@
           class="bg-[#ccc] rounded-full h-14 w-14 text-white text-lg cursor-not-allowed"
           id="delete-meal"
           disabled
+          aria-label="delete meal"
         >
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
@@ -86,12 +87,13 @@
           type="button"
           class="bg-[#BBE2EC] rounded-full h-14 w-14 text-white text-lg cursor-pointer active:scale-75 transition-all"
           id="next-meal"
+          aria-label="next meal"
         >
           <i class="fa fa-random" aria-hidden="true"></i>
         </button>
       </section>
     </main>
 
-    <script type="module" src="./src/script.ts"></script>
+    <script type="module" src="./src/index.ts"></script>
   </body>
 </html>
