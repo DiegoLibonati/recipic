@@ -7,7 +7,7 @@
 
     <title>Recipe APP</title>
 
-    <link rel="stylesheet" type="text/css" href="./src/styles.css" />
+    <link rel="stylesheet" type="text/css" href="./src/index.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,7 +21,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body class="bg-[#40A2E3] relative w-screen h-screen">
+  <body class="bg-background relative w-screen h-screen">
     <div
       class="flex items-center justify-center absolute bottom-0 right-0 w-full h-16 opacity-0 transition-opacity"
       id="alert"
@@ -31,9 +31,9 @@
 
     <main class="flex flex-col items-center justify-around w-full h-full p-2">
       <section
-        class="flex items-center justify-center bg-[#FFF6E9] w-full h-[10%] rounded-lg shadow-sm md:w-[40rem]"
+        class="flex items-center justify-center bg-secondary w-full h-[10%] rounded-lg shadow-sm md:w-[40rem]"
       >
-        <form class="flex flex-row bg-[#BBE2EC] m-2 rounded-lg w-full h-[80%]">
+        <form class="flex flex-row bg-primary m-2 rounded-lg w-full h-[80%]">
           <input
             type="text"
             class="w-[80%] outline-none rounded-bl-lg rounded-tl-lg p-2 text-lg"
@@ -41,7 +41,7 @@
           />
           <button
             type="submit"
-            class="bg-[#BBE2EC] w-[20%] text-white rounded-br-lg rounded-tr-lg cursor-pointer p-2 active:scale-75 transition-all"
+            class="bg-primary w-[20%] text-white rounded-br-lg rounded-tr-lg cursor-pointer p-2 active:scale-75 transition-all"
             id="button-form"
             aria-label="search meal"
           >
@@ -51,18 +51,18 @@
       </section>
 
       <section
-        class="flex overflow-x-auto bg-[#FFF6E9] w-full h-[10%] rounded-lg p-2 shadow-sm md:w-[40rem]"
+        class="flex overflow-x-auto bg-secondary w-full h-[10%] rounded-lg p-2 shadow-sm md:w-[40rem]"
       >
         <article class="flex items-center" id="histories"></article>
       </section>
 
       <section
-        class="flex items-center justify-center relative bg-[#FFF6E9] w-full h-[50%] rounded-lg p-2 shadow-sm md:w-[40rem]"
+        class="flex items-center justify-center relative bg-secondary w-full h-[50%] rounded-lg p-2 shadow-sm md:w-[40rem]"
         id="meal-information"
       ></section>
 
       <section
-        class="flex items-center justify-around bg-[#FFF6E9] w-full h-[15%] rounded-lg shadow-sm md:w-[40rem]"
+        class="flex items-center justify-around bg-secondary w-full h-[15%] rounded-lg shadow-sm md:w-[40rem]"
       >
         <button
           type="button"
@@ -75,7 +75,7 @@
 
         <button
           type="button"
-          class="bg-[#ccc] rounded-full h-14 w-14 text-white text-lg cursor-not-allowed"
+          class="bg-gray-200 rounded-full h-14 w-14 text-white text-lg cursor-not-allowed"
           id="delete-meal"
           disabled
           aria-label="delete meal"
@@ -85,7 +85,7 @@
 
         <button
           type="button"
-          class="bg-[#BBE2EC] rounded-full h-14 w-14 text-white text-lg cursor-pointer active:scale-75 transition-all"
+          class="bg-primary rounded-full h-14 w-14 text-white text-lg cursor-pointer active:scale-75 transition-all"
           id="next-meal"
           aria-label="next meal"
         >

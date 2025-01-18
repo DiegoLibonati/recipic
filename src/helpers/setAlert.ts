@@ -10,13 +10,13 @@ export const setAlert = (message: string, type: string): void => {
   alert.classList.remove("opacity-0");
   alert.classList.add(
     "opacity-100",
-    type === "success" ? "bg-[#0D9276]" : "bg-red-600"
+    type === "success" ? "bg-success" : "bg-red-600"
   );
   alertHeading.textContent = message;
 
   timeout = setTimeout(() => {
     alert.classList.add("opacity-0");
-    alert.classList.remove("opacity-100", "bg-[#0D9276]", "bg-red-600");
+    alert.classList.remove("opacity-100", "bg-success", "bg-red-600");
     alertHeading.textContent = "";
   }, 2000);
 };

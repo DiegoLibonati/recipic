@@ -1,6 +1,18 @@
-import { Meal } from "../../entities/vite-env";
+import fs from "fs";
+import path from "path";
 
-export const MEALS_REQUEST_MOCK: { meals: Meal[] } = {
+import { Meal } from "../entities/vite-env";
+
+const INITIAL_HTML: string = fs.readFileSync(
+  path.resolve(__dirname, "../../index.html"),
+  "utf8"
+);
+
+export const OFFICIAL_BODY = INITIAL_HTML.match(
+  /<body[^>]*>([\s\S]*?)<\/body>/i
+)![1];
+
+export const mockMealsRequest: { meals: Meal[] } = {
   meals: [
     {
       idMeal: "52914",
@@ -58,7 +70,7 @@ export const MEALS_REQUEST_MOCK: { meals: Meal[] } = {
   ],
 };
 
-export const MEAL_REQUEST_SEARCH_BY_NAME: { meals: Meal[] } = {
+export const mockMealRequestSearchByName: { meals: Meal[] } = {
   meals: [
     {
       idMeal: "52967",
@@ -116,5 +128,10 @@ export const MEAL_REQUEST_SEARCH_BY_NAME: { meals: Meal[] } = {
   ],
 };
 
-export const MEAL_MOCK: Meal = MEALS_REQUEST_MOCK.meals[0];
-export const MEAL_MOCK_BY_NAME: Meal = MEAL_REQUEST_SEARCH_BY_NAME.meals[0];
+export const mockMeal: Meal = mockMealsRequest.meals[0];
+export const mockMealByName: Meal = mockMealRequestSearchByName.meals[0];
+
+export const mocksLocalStorage = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+};

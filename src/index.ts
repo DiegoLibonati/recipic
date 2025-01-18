@@ -46,7 +46,7 @@ const insertHistory = (meal: Meal) => {
 
   div.setAttribute(
     "class",
-    "h-12 w-12 rounded-full p-1 bg-[#BBE2EC] cursor-pointer active:scale-75 transition-all ml-[.5rem] md:h-16 md:w-16"
+    "h-12 w-12 rounded-full p-1 bg-primary cursor-pointer active:scale-75 transition-all ml-[.5rem] md:h-16 md:w-16"
   );
 
   const img = document.createElement("img");
@@ -119,7 +119,7 @@ const viewMeal = (idMeal: string): void => {
   const button = document.createElement("button");
   button.setAttribute(
     "class",
-    "absolute top-4 right-4 h-12 w-12 bg-[#BBE2EC] rounded-full text-white text-base cursor-pointer active:scale-75 transition-all"
+    "absolute top-4 right-4 h-12 w-12 bg-primary rounded-full text-white text-base cursor-pointer active:scale-75 transition-all"
   );
   button.type = "button";
 
@@ -133,10 +133,10 @@ const viewMeal = (idMeal: string): void => {
   mealContainer.append(button);
 
   deleteMealButton.removeAttribute("disabled");
-  deleteMealButton.classList.add("[&&]:bg-[#0D9276]");
-  deleteMealButton.classList.remove("[&&]:bg-[#ccc]", "cursor-not-allowed");
+  deleteMealButton.classList.add("[&&]:bg-success");
+  deleteMealButton.classList.remove("[&&]:bg-gray-200", "cursor-not-allowed");
 
-  likeMealButton.classList.add("[&&]:bg-[#ccc]", "[&&]:cursor-not-allowed");
+  likeMealButton.classList.add("[&&]:bg-gray-200", "[&&]:cursor-not-allowed");
 
   button.addEventListener("click", () => nextMealButton.click());
 };
@@ -149,10 +149,10 @@ const generateMeal = async (): Promise<void> => {
   mealState.historyOpen = false;
 
   deleteMealButton.setAttribute("disabled", "");
-  deleteMealButton.classList.add("[&&]:bg-[#ccc]");
-  deleteMealButton.classList.remove("[&&]:bg-[#0D9276]");
+  deleteMealButton.classList.add("[&&]:bg-gray-200");
+  deleteMealButton.classList.remove("[&&]:bg-success");
 
-  likeMealButton.classList.remove("[&&]:bg-[#ccc]", "[&&]:cursor-not-allowed");
+  likeMealButton.classList.remove("[&&]:bg-gray-200", "[&&]:cursor-not-allowed");
 
   insertMeal(meal);
 };
@@ -237,7 +237,7 @@ const onInit = (): void => {
 
     span.setAttribute(
       "class",
-      "flex items-center justify-center h-12 w-12 rounded-full p-1 bg-[#BBE2EC] text-white cursor-not-allowed md:h-16 md:w-16"
+      "flex items-center justify-center h-12 w-12 rounded-full p-1 bg-primary text-white cursor-not-allowed md:h-16 md:w-16"
     );
 
     const icon = document.createElement("i");
