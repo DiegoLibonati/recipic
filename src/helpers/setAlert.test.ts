@@ -2,7 +2,7 @@ import { getElements } from "./getElements";
 
 import { setAlert } from "./setAlert";
 
-import { OFFICIAL_BODY } from "../tests/jest.constants";
+import { OFFICIAL_BODY } from "../../tests/jest.constants";
 
 describe("setAlert.ts", () => {
   describe("General Tests.", () => {

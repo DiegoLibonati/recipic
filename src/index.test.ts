@@ -7,8 +7,8 @@ import {
   mockMealRequestSearchByName,
   mockMealsRequest,
   OFFICIAL_BODY,
-} from "./tests/jest.constants";
-import { createServer } from "./tests/msw/server";
+} from "../tests/jest.constants";
+import { createServer } from "../tests/msw/server";
 
 describe("index.ts", () => {
   describe("General Tests.", () => {

@@ -22,7 +22,6 @@ I made a recipe page. In this page you will be able to search for meals randomly
 #### Dependencies
 
 ```
-"@types/jest": "^29.5.14"
 "axios": "^1.6.7"
 ```
 
@@ -32,15 +31,18 @@ I made a recipe page. In this page you will be able to search for meals randomly
 "@testing-library/dom": "^10.4.0"
 "@testing-library/jest-dom": "^6.6.3"
 "@testing-library/user-event": "^14.5.2"
+"@types/jest": "^29.5.14"
+"@types/node": "^20.10.6"
+"autoprefixer": "^10.4.16"
 "jest": "^29.7.0"
 "jest-environment-jsdom": "^29.7.0"
-"ts-jest": "^29.2.5"
 "jest-fixed-jsdom": "^0.0.9"
-"typescript": "^5.2.2"
-"vite": "^5.0.8"
-"autoprefixer": "^10.4.16"
+"msw": "^2.6.5"
 "postcss": "^8.4.33"
 "tailwindcss": "^3.4.1"
+"ts-jest": "^29.2.5"
+"typescript": "^5.2.2"
+"vite": "^5.0.8"
 ```
 
 ## Portfolio Link
