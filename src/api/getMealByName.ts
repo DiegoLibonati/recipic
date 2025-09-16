@@ -1,5 +1,6 @@
 import axios from "axios";
-import { Meal } from "../entities/vite-env";
+
+import { Meal } from "@src/entities/vite-env";
 
 export const getMealByName = async (nameMeal: string): Promise<Meal> => {
   const request = await axios.get(

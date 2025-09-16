@@ -1,8 +1,7 @@
-import { getElements } from "./getElements";
+import { getElements } from "@src/helpers/getElements";
+import { setAlert } from "@src/helpers/setAlert";
 
-import { setAlert } from "./setAlert";
-
-import { OFFICIAL_BODY } from "../../tests/jest.constants";
+import { OFFICIAL_BODY } from "@tests/jest.constants";
 
 describe("setAlert.ts", () => {
   describe("General Tests.", () => {

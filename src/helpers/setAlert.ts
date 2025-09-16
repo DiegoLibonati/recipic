@@ -1,4 +1,4 @@
-import { getElements } from "./getElements";
+import { getElements } from "@src/helpers/getElements";
 
 let timeout: NodeJS.Timeout | null;
 

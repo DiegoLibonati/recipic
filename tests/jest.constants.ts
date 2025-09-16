@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-import { Meal } from "../src/entities/vite-env";
+import { Meal } from "@src/entities/vite-env";
 
 const INITIAL_HTML: string = fs.readFileSync(
   path.resolve(__dirname, "../index.html"),

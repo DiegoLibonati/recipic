@@ -1,16 +1,16 @@
-import { Meal } from "./entities/vite-env";
+import { Meal } from "@src/entities/vite-env";
 
-import { getMeal } from "./api/getMeal";
-import { getMealByName } from "./api/getMealByName";
+import { getMeal } from "@src/api/getMeal";
+import { getMealByName } from "@src/api/getMealByName";
 
-import { getElements } from "./helpers/getElements";
-import { setAlert } from "./helpers/setAlert";
-import { setLocalStorage } from "./helpers/setLocalStorage";
-import { getMealsFromLocalStorage } from "./helpers/getMealsFromLocalStorage";
+import { getElements } from "@src/helpers/getElements";
+import { setAlert } from "@src/helpers/setAlert";
+import { setLocalStorage } from "@src/helpers/setLocalStorage";
+import { getMealsFromLocalStorage } from "@src/helpers/getMealsFromLocalStorage";
 
-import { LOCAL_STORAGE_MEALS_KEY } from "./constants/constants";
+import { LOCAL_STORAGE_MEALS_KEY } from "@src/constants/constants";
 
-import { mealState } from "./state";
+import { mealState } from "@src/state";
 
 const setInitialState = (): void => {
   mealState.currentMeal = null;

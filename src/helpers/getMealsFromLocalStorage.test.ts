@@ -1,8 +1,8 @@
-import { getMealsFromLocalStorage } from "./getMealsFromLocalStorage";
+import { getMealsFromLocalStorage } from "@src/helpers/getMealsFromLocalStorage";
 
-import { LOCAL_STORAGE_MEALS_KEY } from "../constants/constants";
+import { LOCAL_STORAGE_MEALS_KEY } from "@src/constants/constants";
 
-import { mocksLocalStorage } from "../../tests/jest.constants";
+import { mocksLocalStorage } from "@tests/jest.constants";
 
 describe("getMealsFromLocalStorage.ts", () => {
   describe("General Tests.", () => {
