@@ -1,19 +1,32 @@
 // vite.config.ts
 import path from "path";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 
-export default defineConfig({
-  resolve: {
-    alias: {
-      "@src": path.resolve(__dirname, "./src"),
-      "@tests": path.resolve(__dirname, "./tests"),
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+
+  return {
+    server: {
+      proxy: {
+        "/api/json/v1/1": {
+          target: env.VITE_API_URL,
+          changeOrigin: true,
+          secure: false,
+        },
+      },
     },
-  },
-  css: {
-    postcss: {
-      plugins: [tailwindcss(), autoprefixer()],
+    resolve: {
+      alias: {
+        "@src": path.resolve(__dirname, "./src"),
+        "@tests": path.resolve(__dirname, "./tests"),
+      },
     },
-  },
+    css: {
+      postcss: {
+        plugins: [tailwindcss(), autoprefixer()],
+      },
+    },
+  };
 });
