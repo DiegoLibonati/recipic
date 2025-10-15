@@ -49,76 +49,16 @@
   </head>
   <body class="bg-background relative w-screen h-screen">
     <div
-      class="flex items-center justify-center absolute bottom-0 right-0 w-full h-16 opacity-0 transition-opacity"
+      class="flex items-center justify-center absolute bottom-0 right-0 w-full h-16 opacity-0 transition-opacity alert"
       id="alert"
     >
-      <h2 class="text-white font-semibold text-lg" id="alert-text"></h2>
+      <h2
+        class="text-white font-semibold text-lg alert__text"
+        id="alert-text"
+      ></h2>
     </div>
 
-    <main class="flex flex-col items-center justify-around w-full h-full p-2">
-      <section
-        class="flex items-center justify-center bg-secondary w-full h-[10%] rounded-lg shadow-sm md:w-[40rem]"
-      >
-        <form class="flex flex-row bg-primary m-2 rounded-lg w-full h-[80%]">
-          <input
-            type="text"
-            class="w-[80%] outline-none rounded-bl-lg rounded-tl-lg p-2 text-lg"
-            id="input-meal"
-          />
-          <button
-            type="submit"
-            class="bg-primary w-[20%] text-white rounded-br-lg rounded-tr-lg cursor-pointer p-2 active:scale-75 transition-all"
-            id="button-form"
-            aria-label="search meal"
-          >
-            <i class="fa fa-search" aria-hidden="true"></i>
-          </button>
-        </form>
-      </section>
-
-      <section
-        class="flex overflow-x-auto bg-secondary w-full h-[10%] rounded-lg p-2 shadow-sm md:w-[40rem]"
-      >
-        <article class="flex items-center" id="histories"></article>
-      </section>
-
-      <section
-        class="flex items-center justify-center relative bg-secondary w-full h-[50%] rounded-lg p-2 shadow-sm md:w-[40rem]"
-        id="meal-information"
-      ></section>
-
-      <section
-        class="flex items-center justify-around bg-secondary w-full h-[15%] rounded-lg shadow-sm md:w-[40rem]"
-      >
-        <button
-          type="button"
-          class="bg-red-600 rounded-full h-14 w-14 text-white text-lg cursor-pointer active:scale-75 transition-all"
-          id="like-meal"
-          aria-label="like meal"
-        >
-          <i class="fa fa-heart" aria-hidden="true"></i>
-        </button>
-
-        <button
-          type="button"
-          class="bg-gray-200 rounded-full h-14 w-14 text-white text-lg cursor-not-allowed"
-          id="delete-meal"
-          disabled
-          aria-label="delete meal"
-        >
-          <i class="fa fa-trash" aria-hidden="true"></i>
-        </button>
-
-        <button
-          type="button"
-          class="bg-primary rounded-full h-14 w-14 text-white text-lg cursor-pointer active:scale-75 transition-all"
-          id="next-meal"
-          aria-label="next meal"
-        >
-          <i class="fa fa-random" aria-hidden="true"></i>
-        </button>
-      </section>
-    </main>
+    <div id="app"></div>
 
     <script type="module" src="./src/index.ts"></script>
   </body>

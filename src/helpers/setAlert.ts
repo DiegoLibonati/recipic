@@ -1,22 +1,21 @@
-import { getElements } from "@src/helpers/getElements";
-
 let timeout: NodeJS.Timeout | null;
 
 export const setAlert = (message: string, type: string): void => {
-  const { alert, alertHeading } = getElements();
+  const alertElement = document.querySelector<HTMLDivElement>("#alert");
+  const alertH2 = document.querySelector<HTMLDivElement>("#alert-text");
 
   if (timeout) clearTimeout(timeout);
 
-  alert.classList.remove("opacity-0");
-  alert.classList.add(
+  alertElement!.classList.remove("opacity-0");
+  alertElement!.classList.add(
     "opacity-100",
     type === "success" ? "bg-success" : "bg-red-600"
   );
-  alertHeading.textContent = message;
+  alertH2!.textContent = message;
 
   timeout = setTimeout(() => {
-    alert.classList.add("opacity-0");
-    alert.classList.remove("opacity-100", "bg-success", "bg-red-600");
-    alertHeading.textContent = "";
+    alertElement!.classList.add("opacity-0");
+    alertElement!.classList.remove("opacity-100", "bg-success", "bg-red-600");
+    alertH2!.textContent = "";
   }, 2000);
 };

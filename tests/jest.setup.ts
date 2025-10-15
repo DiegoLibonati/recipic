@@ -9,10 +9,6 @@ Object.defineProperty(global, "localStorage", {
   },
 });
 
-jest.mock("../src/constants/config.ts", () => ({
-  get CONFIG() {
-    return {
-      API_URL: process.env.VITE_API_URL,
-    };
-  },
-}));
+jest.mock("@src/constants/envs", () => {
+  return { __esModule: true, default: { API_URL: "https://api.github.com" } };
+});

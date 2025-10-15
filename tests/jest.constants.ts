@@ -1,16 +1,4 @@
-import fs from "fs";
-import path from "path";
-
-import { Meal } from "@src/entities/vite-env";
-
-const INITIAL_HTML: string = fs.readFileSync(
-  path.resolve(__dirname, "../index.html"),
-  "utf8"
-);
-
-export const OFFICIAL_BODY = INITIAL_HTML.match(
-  /<body[^>]*>([\s\S]*?)<\/body>/i
-)![1];
+import { Meal } from "@src/entities/app";
 
 export const mockMealsRequest: { meals: Meal[] } = {
   meals: [

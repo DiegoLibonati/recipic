@@ -1,7 +1,3 @@
-/// <reference types="vite/client" />
-
-// TYPES
-
 export type Meal = {
   idMeal: string;
   strMeal: string;
@@ -58,6 +54,4 @@ export type Meal = {
   dateModified?: string;
 };
 
-export type Config = {
-  API_URL: string;
-};
+export type HistoryMeal = Pick<Meal, "idMeal" | "strMeal" | "strMealThumb">;

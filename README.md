@@ -22,7 +22,8 @@ I made a recipe page. In this page you will be able to search for meals randomly
 1. Typescript
 2. TailwindCSS
 3. HTML5
-4. Vite
+4. CSS3
+5. Vite
 
 ## Libraries used
 

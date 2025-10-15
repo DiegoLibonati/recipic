@@ -1,69 +1,103 @@
-import { getElements } from "@src/helpers/getElements";
 import { setAlert } from "@src/helpers/setAlert";
 
-import { OFFICIAL_BODY } from "@tests/jest.constants";
-
 describe("setAlert.ts", () => {
+  let alertElement: HTMLDivElement;
+  let alertText: HTMLDivElement;
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+
+    alertElement = document.createElement("div");
+    alertElement.id = "alert";
+    alertElement.classList.add("opacity-0");
+
+    alertText = document.createElement("div");
+    alertText.id = "alert-text";
+
+    document.body.appendChild(alertElement);
+    document.body.appendChild(alertText);
+  });
+
+  afterEach(() => {
+    document.body.innerHTML = "";
+    jest.clearAllTimers();
+    jest.useRealTimers();
+  });
+
   describe("General Tests.", () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
+    test("It should show alert with success styling", () => {
+      setAlert("Success message", "success");
 
-      document.body.innerHTML = OFFICIAL_BODY;
+      expect(alertElement.classList.contains("opacity-100")).toBe(true);
+      expect(alertElement.classList.contains("opacity-0")).toBe(false);
+      expect(alertElement.classList.contains("bg-success")).toBe(true);
+      expect(alertText.textContent).toBe("Success message");
     });
 
-    afterEach(() => {
-      jest.runOnlyPendingTimers();
-      jest.useRealTimers();
+    test("It should show alert with error styling", () => {
+      setAlert("Error message", "error");
 
-      document.body.innerHTML = "";
+      expect(alertElement.classList.contains("opacity-100")).toBe(true);
+      expect(alertElement.classList.contains("opacity-0")).toBe(false);
+      expect(alertElement.classList.contains("bg-red-600")).toBe(true);
+      expect(alertText.textContent).toBe("Error message");
     });
 
-    test("It should render an success alert and disappear after 2 seconds.", () => {
-      const message = "message";
-      const type = "success";
+    test("It should hide alert after 2 seconds", () => {
+      setAlert("Test message", "success");
 
-      const { alert, alertHeading } = getElements();
-
-      expect(alert).toBeInTheDocument();
-      expect(alert.classList.contains("opacity-0")).toBeTruthy();
-      expect(alertHeading).toBeEmptyDOMElement();
-
-      setAlert(message, type);
-
-      expect(alert.classList.contains("opacity-100")).toBeTruthy();
-      expect(alert.classList.contains("bg-success")).toBeTruthy();
-      expect(alertHeading).toHaveTextContent(message);
+      expect(alertElement.classList.contains("opacity-100")).toBe(true);
 
       jest.advanceTimersByTime(2000);
 
-      expect(alert.classList.contains("opacity-0")).toBeTruthy();
-      expect(alert.classList.contains("opacity-100")).toBeFalsy();
-      expect(alert.classList.contains("bg-success")).toBeFalsy();
-      expect(alertHeading).toBeEmptyDOMElement();
+      expect(alertElement.classList.contains("opacity-0")).toBe(true);
+      expect(alertElement.classList.contains("opacity-100")).toBe(false);
+      expect(alertElement.classList.contains("bg-success")).toBe(false);
+      expect(alertText.textContent).toBe("");
     });
 
-    test("It should render an error alert and disappear after 2 seconds.", () => {
-      const message = "message";
-      const type = "error";
+    test("It should clear previous timeout when called again", () => {
+      setAlert("First message", "success");
 
-      const { alert, alertHeading } = getElements();
+      jest.advanceTimersByTime(1000);
 
-      expect(alert).toBeInTheDocument();
-      expect(alert.classList.contains("opacity-0")).toBeTruthy();
-      expect(alertHeading).toBeEmptyDOMElement();
+      setAlert("Second message", "error");
 
-      setAlert(message, type);
+      expect(alertText.textContent).toBe("Second message");
+      expect(alertElement.classList.contains("bg-red-600")).toBe(true);
 
-      expect(alert.classList.contains("opacity-100")).toBeTruthy();
-      expect(alert.classList.contains("bg-red-600")).toBeTruthy();
-      expect(alertHeading).toHaveTextContent(message);
+      jest.advanceTimersByTime(1000);
 
-      jest.advanceTimersByTime(2000);
+      expect(alertElement.classList.contains("opacity-100")).toBe(true);
 
-      expect(alert.classList.contains("opacity-0")).toBeTruthy();
-      expect(alert.classList.contains("opacity-100")).toBeFalsy();
-      expect(alert.classList.contains("bg-red-600")).toBeFalsy();
-      expect(alertHeading).toBeEmptyDOMElement();
+      jest.advanceTimersByTime(1000);
+
+      expect(alertElement.classList.contains("opacity-0")).toBe(true);
+    });
+  });
+
+  describe("Edge cases", () => {
+    test("It should handle empty message", () => {
+      setAlert("", "success");
+
+      expect(alertText.textContent).toBe("");
+      expect(alertElement.classList.contains("opacity-100")).toBe(true);
+    });
+
+    test("It should handle multiple rapid calls", () => {
+      setAlert("Message 1", "success");
+      setAlert("Message 2", "error");
+      setAlert("Message 3", "success");
+
+      expect(alertText.textContent).toBe("Message 3");
+      expect(alertElement.classList.contains("bg-success")).toBe(true);
+    });
+
+    test("It should handle non-success type as error", () => {
+      setAlert("Warning message", "warning");
+
+      expect(alertElement.classList.contains("bg-red-600")).toBe(true);
+      expect(alertElement.classList.contains("bg-success")).toBe(false);
     });
   });
 });
