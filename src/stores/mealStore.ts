@@ -6,7 +6,7 @@ import { setLocalStorage } from "@src/helpers/setLocalStorage";
 
 import { LOCAL_STORAGE_HISTORIES_KEY } from "@src/constants/vars";
 
-import { Store } from "@src/stores/store";
+import { Store } from "@src/core/store";
 
 export class MealStore extends Store<MealState> {
   constructor(initialState: MealState) {
