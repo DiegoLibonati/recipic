@@ -68,10 +68,18 @@ describe("InformationMeal.ts", () => {
       );
 
       expect(container).toBeInstanceOf(HTMLDivElement);
-      expect(container.querySelector("h2")).toBeInTheDocument();
-      expect(container.querySelector("img")).toBeInTheDocument();
-      expect(container.querySelector("p")).toBeInTheDocument();
-      expect(container.querySelector("button")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLHeadingElement>("h2")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLImageElement>("img")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLParagraphElement>("p")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLButtonElement>("button")
+      ).toBeInTheDocument();
     });
 
     test("It should render meal name correctly", () => {
@@ -81,7 +89,7 @@ describe("InformationMeal.ts", () => {
         props.instructions
       );
 
-      const heading = container.querySelector("h2");
+      const heading = container.querySelector<HTMLHeadingElement>("h2");
 
       expect(heading?.textContent).toBe(props.name);
     });
@@ -93,7 +101,7 @@ describe("InformationMeal.ts", () => {
         props.instructions
       );
 
-      const img = container.querySelector("img");
+      const img = container.querySelector<HTMLImageElement>("img");
 
       expect(img?.src).toBe(props.thumbUrl);
       expect(img?.alt).toBe(props.name);
@@ -106,7 +114,7 @@ describe("InformationMeal.ts", () => {
         props.instructions
       );
 
-      const paragraph = container.querySelector("p");
+      const paragraph = container.querySelector<HTMLParagraphElement>("p");
 
       expect(paragraph?.textContent).toBe(props.instructions);
     });
@@ -167,7 +175,7 @@ describe("InformationMeal.ts", () => {
         ""
       );
 
-      const paragraph = container.querySelector("p");
+      const paragraph = container.querySelector<HTMLParagraphElement>("p");
 
       expect(paragraph?.textContent).toBe("");
     });
@@ -180,7 +188,7 @@ describe("InformationMeal.ts", () => {
         longInstructions
       );
 
-      const paragraph = container.querySelector("p");
+      const paragraph = container.querySelector<HTMLParagraphElement>("p");
 
       expect(paragraph?.className).toContain("overflow-auto");
     });
@@ -193,7 +201,7 @@ describe("InformationMeal.ts", () => {
         "Instructions"
       );
 
-      const heading = container.querySelector("h2");
+      const heading = container.querySelector<HTMLHeadingElement>("h2");
 
       expect(heading?.textContent).toBe(specialName);
     });

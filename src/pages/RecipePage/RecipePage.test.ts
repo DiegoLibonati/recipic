@@ -78,10 +78,18 @@ describe("RecipePage.ts", () => {
       document.body.appendChild(container);
 
       expect(container).toBeInstanceOf(HTMLElement);
-      expect(container.querySelector("#form-search-meal")).toBeInTheDocument();
-      expect(container.querySelector("#histories")).toBeInTheDocument();
-      expect(container.querySelector("#meal-information")).toBeInTheDocument();
-      expect(container.querySelector("#button-actions")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLFormElement>("#form-search-meal")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLElement>("#histories")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLElement>("#meal-information")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLElement>("#button-actions")
+      ).toBeInTheDocument();
     });
 
     test("It should render search form with input and button", () => {
@@ -249,7 +257,7 @@ describe("RecipePage.ts", () => {
       const { container } = renderComponent();
       document.body.appendChild(container);
 
-      const histories = container.querySelector("#histories");
+      const histories = container.querySelector<HTMLElement>("#histories");
 
       expect(histories?.children.length).toBe(1);
     });
@@ -275,7 +283,7 @@ describe("RecipePage.ts", () => {
       const { container } = renderComponent();
       document.body.appendChild(container);
 
-      const histories = container.querySelector("#histories");
+      const histories = container.querySelector<HTMLElement>("#histories");
 
       expect(histories?.children.length).toBe(2);
     });
@@ -286,8 +294,9 @@ describe("RecipePage.ts", () => {
       const { container } = renderComponent();
       document.body.appendChild(container);
 
-      const mealInfo = container.querySelector("#meal-information");
-      const img = mealInfo?.querySelector("img");
+      const mealInfo =
+        container.querySelector<HTMLElement>("#meal-information");
+      const img = mealInfo?.querySelector<HTMLImageElement>("img");
 
       expect(img).toBeInTheDocument();
       expect(img?.src).toBe(mockMeal.strMealThumb);
@@ -303,8 +312,9 @@ describe("RecipePage.ts", () => {
       const { container } = renderComponent();
       document.body.appendChild(container);
 
-      const mealInfo = container.querySelector("#meal-information");
-      const heading = mealInfo?.querySelector("h2");
+      const mealInfo =
+        container.querySelector<HTMLElement>("#meal-information");
+      const heading = mealInfo?.querySelector<HTMLHeadingElement>("h2");
 
       expect(heading).toBeInTheDocument();
       expect(heading?.textContent).toBe(mockMeal.strMeal);

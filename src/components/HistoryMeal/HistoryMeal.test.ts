@@ -57,7 +57,9 @@ describe("HistoryMeal.ts", () => {
       );
 
       expect(container).toBeInstanceOf(HTMLDivElement);
-      expect(container.querySelector("img")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLImageElement>("img")
+      ).toBeInTheDocument();
     });
 
     test("It should render image with correct attributes", () => {
@@ -67,7 +69,7 @@ describe("HistoryMeal.ts", () => {
         props.thumbUrl
       );
 
-      const img = container.querySelector("img");
+      const img = container.querySelector<HTMLImageElement>("img");
 
       expect(img?.id).toBe(props.id);
       expect(img?.src).toBe(props.thumbUrl);
@@ -95,7 +97,7 @@ describe("HistoryMeal.ts", () => {
         props.thumbUrl
       );
 
-      const img = container.querySelector("img");
+      const img = container.querySelector<HTMLImageElement>("img");
 
       expect(img?.className).toContain("w-full");
       expect(img?.className).toContain("h-full");
@@ -157,7 +159,7 @@ describe("HistoryMeal.ts", () => {
         "https://example.com/meal.jpg"
       );
 
-      const img = container.querySelector("img");
+      const img = container.querySelector<HTMLImageElement>("img");
 
       expect(img?.alt).toBe("");
     });
@@ -166,7 +168,7 @@ describe("HistoryMeal.ts", () => {
       const url = "https://cdn.example.com/images/meal-thumbnail.png";
       const { container } = renderComponent("meal-001", "Burger", url);
 
-      const img = container.querySelector("img");
+      const img = container.querySelector<HTMLImageElement>("img");
 
       expect(img?.src).toBe(url);
     });

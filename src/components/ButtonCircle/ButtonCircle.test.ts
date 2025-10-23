@@ -346,7 +346,9 @@ describe("ButtonCircle.ts", () => {
       );
 
       expect(container.innerHTML).toBe(htmlContent);
-      expect(container.querySelector(".icon")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLSpanElement>(".icon")
+      ).toBeInTheDocument();
     });
 
     test("It should render SVG content correctly", () => {
@@ -358,8 +360,10 @@ describe("ButtonCircle.ts", () => {
         svgContent
       );
 
-      expect(container.querySelector("svg")).toBeInTheDocument();
-      expect(container.querySelector("circle")).toBeInTheDocument();
+      expect(container.querySelector<HTMLElement>("svg")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLElement>("circle")
+      ).toBeInTheDocument();
     });
   });
 
@@ -430,7 +434,9 @@ describe("ButtonCircle.ts", () => {
       );
 
       expect(container.disabled).toBe(true);
-      expect(container.querySelector(".icon")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLSpanElement>(".icon")
+      ).toBeInTheDocument();
     });
   });
 });
