@@ -5,7 +5,7 @@ import { HistoryMealProps } from "@src/entities/props";
 import { HistoryMeal } from "@src/components/HistoryMeal/HistoryMeal";
 
 type RenderComponent = {
-  props: HistoryMealProps;
+  props: { onClick: jest.Mock } & HistoryMealProps;
   container: HTMLDivElement;
 };
 
@@ -15,7 +15,7 @@ const renderComponent = (
   thumbUrl: string,
   onClick?: jest.Mock
 ): RenderComponent => {
-  const props: HistoryMealProps = {
+  const props = {
     id: id,
     name: name,
     thumbUrl: thumbUrl,

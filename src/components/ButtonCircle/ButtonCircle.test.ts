@@ -6,7 +6,7 @@ import { ButtonCircleProps } from "@src/entities/props";
 import { ButtonCircle } from "@src/components/ButtonCircle/ButtonCircle";
 
 type RenderComponent = {
-  props: ButtonCircleProps;
+  props: { onClick: jest.Mock } & ButtonCircleProps;
   container: HTMLButtonElement;
 };
 
@@ -19,7 +19,7 @@ const renderComponent = (
   disabled?: boolean,
   onClick?: jest.Mock
 ): RenderComponent => {
-  const props: ButtonCircleProps = {
+  const props = {
     id: id,
     ariaLabel: ariaLabel,
     type: type,
