@@ -16,7 +16,8 @@ const handleHistoryClick = async (_: MouseEvent, id: string) => {
 
   const meal = historiesMeal.find((hm) => hm.idMeal === id);
 
-  const completeMeal = await getMealByName(meal?.strMeal!);
+  const response = await getMealByName(meal?.strMeal!);
+  const completeMeal = response.meals?.[0]
 
   mealStore.setHistoryMeal(completeMeal!);
 
@@ -56,19 +57,21 @@ const handleSearchMeal = async (e: SubmitEvent, input: HTMLInputElement) => {
 
   const mealByName = await getMealByName(value);
 
-  if (!mealByName)
+  if (!mealByName.meals)
     return setAlert("There is no meal with the name entered.", "error");
 
-  if (mealStore.idMealInHistory(mealByName.idMeal))
+  const meal = mealByName.meals[0]
+
+  if (mealStore.idMealInHistory(meal.idMeal))
     return setAlert("This meal is already in your favorites.", "error");
 
   mealStore.addHistory({
-    idMeal: mealByName?.idMeal!,
-    strMeal: mealByName?.strMeal!,
-    strMealThumb: mealByName?.strMealThumb!,
+    idMeal: meal?.idMeal!,
+    strMeal: meal?.strMeal!,
+    strMealThumb: meal?.strMealThumb!,
   });
   input.value = "";
-  setAlert(`${mealByName?.strMeal} has been added to favorites.`, "success");
+  setAlert(`${meal?.strMeal} has been added to favorites.`, "success");
 };
 
 const handleNextMeal = async () => {
@@ -79,7 +82,7 @@ const handleNextMeal = async () => {
 const onInit = async () => {
   const meal = await getMeal();
 
-  mealStore.setCurrentMeal(meal);
+  mealStore.setCurrentMeal(meal.meals[0]);
 
   setAlert("New meal successfully obtained.", "success");
 };
