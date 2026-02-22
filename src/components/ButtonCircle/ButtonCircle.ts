@@ -1,4 +1,5 @@
-import { ButtonCircleProps } from "@src/entities/props";
+import type { ButtonCircleComponent } from "@/types/components";
+import type { ButtonCircleProps } from "@/types/props";
 
 export const ButtonCircle = ({
   id,
@@ -8,8 +9,8 @@ export const ButtonCircle = ({
   type,
   disabled,
   onClick,
-}: ButtonCircleProps): HTMLButtonElement => {
-  const button = document.createElement("button");
+}: ButtonCircleProps): ButtonCircleComponent => {
+  const button = document.createElement("button") as ButtonCircleComponent;
   button.className = `rounded-full h-14 w-14 text-white text-lg active:scale-75 transition-all ${
     className ?? ""
   }`;
@@ -19,8 +20,13 @@ export const ButtonCircle = ({
   button.innerHTML = children ?? "";
   button.type = type ?? "button";
 
-  if (button.type === "button" && onClick)
+  if (button.type === "button" && onClick) {
     button.addEventListener("click", onClick);
+
+    button.cleanup = (): void => {
+      button.removeEventListener("click", onClick);
+    };
+  }
 
   return button;
 };

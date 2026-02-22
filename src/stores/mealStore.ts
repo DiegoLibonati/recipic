@@ -1,17 +1,17 @@
-import { HistoryMeal, Meal } from "@src/entities/app";
-import { MealState } from "@src/entities/states";
+import type { HistoryMeal, Meal } from "@/types/app";
+import type { MealState } from "@/types/states";
 
-import { getHistoriesFromLocalStorage } from "@src/helpers/getHistoriesFromLocalStorage";
-import { setLocalStorage } from "@src/helpers/setLocalStorage";
+import { getHistoriesFromLocalStorage } from "@/helpers/getHistoriesFromLocalStorage";
+import { setLocalStorage } from "@/helpers/setLocalStorage";
 
-import { LOCAL_STORAGE_HISTORIES_KEY } from "@src/constants/vars";
+import { LOCAL_STORAGE_HISTORIES_KEY } from "@/constants/vars";
 
-import { Store } from "@src/core/store";
+import { Store } from "@/core/store";
 
 export class MealStore extends Store<MealState> {
-  constructor(initialState: MealState) {
-    super(initialState);
-  }
+  // constructor(initialState: MealState) {
+  //   super(initialState);
+  // }
 
   public setCurrentMeal(meal: Meal | null): void {
     this.setState({ currentMeal: meal });

@@ -1,3 +1,4 @@
+
 # Logs
 logs
 *.log
@@ -23,6 +24,8 @@ dist-ssr
 *.sln
 *.sw?
 
+package-lock.json
 .env
 
-package-lock.json
+# Tailwind
+.tailwind.cache

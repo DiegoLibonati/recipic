@@ -1,98 +1,130 @@
-import { ButtonCircle } from "@src/components/ButtonCircle/ButtonCircle";
-import { PresentationMeal } from "@src/components/PresentationMeal/PresentationMeal";
-import { HistoryMeal } from "@src/components/HistoryMeal/HistoryMeal";
-import { InformationMeal } from "@src/components/InformationMeal/InformationMeal";
+import type { Page } from "@/types/pages";
+import type {
+  HistoryMealComponent,
+  InformationMealComponent,
+  PresentationMealComponent,
+} from "@/types/components";
 
-import { getMeal } from "@src/api/get/getMeal";
-import { getMealByName } from "@src/api/get/getMealByName";
+import { ButtonCircle } from "@/components/ButtonCircle/ButtonCircle";
+import { PresentationMeal } from "@/components/PresentationMeal/PresentationMeal";
+import { HistoryMeal } from "@/components/HistoryMeal/HistoryMeal";
+import { InformationMeal } from "@/components/InformationMeal/InformationMeal";
 
-import { setAlert } from "@src/helpers/setAlert";
-import { setButtonActionsStyles } from "@src/helpers/setButtonActionsStyles";
+import { mealsService } from "@/services/mealsService";
 
-import { mealStore } from "@src/stores/mealStore";
+import { setAlert, clearAlert } from "@/helpers/setAlert";
+import { setButtonActionsStyles } from "@/helpers/setButtonActionsStyles";
 
-const handleHistoryClick = async (_: MouseEvent, id: string) => {
+import { mealStore } from "@/stores/mealStore";
+
+const handleHistoryClick = async (_: MouseEvent, id: string): Promise<void> => {
   const { historiesMeal } = mealStore.getState();
 
   const meal = historiesMeal.find((hm) => hm.idMeal === id);
 
-  const response = await getMealByName(meal?.strMeal!);
-  const completeMeal = response.meals?.[0]
+  if (!meal) return;
 
-  mealStore.setHistoryMeal(completeMeal!);
+  const meals = await mealsService.getMealByName(meal.strMeal);
+
+  if (!meals || meals.length === 0) return;
+
+  const completeMeal = meals[0]!;
+
+  mealStore.setHistoryMeal(completeMeal);
 
   setButtonActionsStyles();
 };
 
-const handleLikeMeal = () => {
+const handleLikeMeal = (): void => {
   const { currentMeal } = mealStore.getState();
 
+  if (!currentMeal) return;
+
   mealStore.addHistory({
-    idMeal: currentMeal?.idMeal!,
-    strMeal: currentMeal?.strMeal!,
-    strMealThumb: currentMeal?.strMealThumb!,
+    idMeal: currentMeal.idMeal,
+    strMeal: currentMeal.strMeal,
+    strMealThumb: currentMeal.strMealThumb,
   });
 
   setButtonActionsStyles();
 
-  setAlert(`${currentMeal?.strMeal} has been added to favorites.`, "success");
+  setAlert(`${currentMeal.strMeal} has been added to favorites.`, "success");
 };
 
-const handleDeleteMeal = () => {
+const handleDeleteMeal = (): void => {
   const { currentMeal, historyMeal } = mealStore.getState();
 
-  mealStore.removeHistory(historyMeal?.idMeal || currentMeal?.idMeal!);
+  const idToDelete = historyMeal?.idMeal ?? currentMeal?.idMeal;
+
+  if (!idToDelete) return;
+
+  mealStore.removeHistory(idToDelete);
 
   setButtonActionsStyles();
 
-  setAlert(`${currentMeal?.strMeal} has been added to favorites.`, "success");
+  setAlert(
+    `${currentMeal?.strMeal ?? "Meal"} has been removed from favorites.`,
+    "success"
+  );
 };
 
-const handleSearchMeal = async (e: SubmitEvent, input: HTMLInputElement) => {
+const handleSearchMeal = async (
+  e: SubmitEvent,
+  input: HTMLInputElement
+): Promise<void> => {
   e.preventDefault();
 
   const value = input.value.trim();
 
-  if (!value) return setAlert("You must enter a valid name.", "error");
+  if (!value) {
+    setAlert("You must enter a valid name.", "error");
+    return;
+  }
 
-  const mealByName = await getMealByName(value);
+  const mealByName = await mealsService.getMealByName(value);
 
-  if (!mealByName.meals)
-    return setAlert("There is no meal with the name entered.", "error");
+  if (!mealByName || mealByName.length === 0) {
+    setAlert("There is no meal with the name entered.", "error");
+    return;
+  }
 
-  const meal = mealByName.meals[0]
+  const meal = mealByName[0]!;
 
-  if (mealStore.idMealInHistory(meal.idMeal))
-    return setAlert("This meal is already in your favorites.", "error");
+  if (mealStore.idMealInHistory(meal.idMeal)) {
+    setAlert("This meal is already in your favorites.", "error");
+    return;
+  }
 
   mealStore.addHistory({
-    idMeal: meal?.idMeal!,
-    strMeal: meal?.strMeal!,
-    strMealThumb: meal?.strMealThumb!,
+    idMeal: meal.idMeal,
+    strMeal: meal.strMeal,
+    strMealThumb: meal.strMealThumb,
   });
+
   input.value = "";
-  setAlert(`${meal?.strMeal} has been added to favorites.`, "success");
+  setAlert(`${meal.strMeal} has been added to favorites.`, "success");
 };
 
-const handleNextMeal = async () => {
+const handleNextMeal = async (): Promise<void> => {
   await onInit();
   setButtonActionsStyles();
 };
 
-const onInit = async () => {
-  const meal = await getMeal();
+const onInit = async (): Promise<void> => {
+  const meal = await mealsService.getMeal();
 
-  mealStore.setCurrentMeal(meal.meals[0]);
-
-  setAlert("New meal successfully obtained.", "success");
+  if (meal.length > 0) {
+    mealStore.setCurrentMeal(meal[0]!);
+    setAlert("New meal successfully obtained.", "success");
+  }
 };
 
-export const RecipePage = (): HTMLElement => {
-  onInit();
+export const RecipePage = (): Page => {
+  void onInit();
 
-  const main = document.createElement("main");
+  const main = document.createElement("main") as Page;
   main.className =
-    "flex flex-col items-center justify-around w-full h-full p-2";
+    "flex flex-col items-center justify-around w-full h-screen p-2";
 
   main.innerHTML = `
     <section
@@ -139,9 +171,13 @@ export const RecipePage = (): HTMLElement => {
     main.querySelector<HTMLFormElement>("#form-search-meal");
   const inputMeal = main.querySelector<HTMLInputElement>("#input-meal");
 
-  formSearchMeal?.addEventListener("submit", (e) =>
-    handleSearchMeal(e, inputMeal!)
-  );
+  const handleFormSubmit = (e: SubmitEvent): void => {
+    if (inputMeal) {
+      void handleSearchMeal(e, inputMeal);
+    }
+  };
+
+  formSearchMeal?.addEventListener("submit", handleFormSubmit);
 
   const buttonLikeMeal = ButtonCircle({
     id: "like-meal",
@@ -166,16 +202,31 @@ export const RecipePage = (): HTMLElement => {
     children: '<i class="fa fa-random" aria-hidden="true"></i>',
     type: "button",
     className: "bg-primary cursor-pointer",
-    onClick: handleNextMeal,
+    onClick: () => {
+      void handleNextMeal();
+    },
   });
 
   buttonActions?.append(buttonLikeMeal, buttonDeleteMeal, buttonNextMeal);
 
-  const renderInformation = () => {
+  let currentInformationComponent:
+    | InformationMealComponent
+    | PresentationMealComponent
+    | null = null;
+  const historyComponents = new Map<string, HistoryMealComponent>();
+
+  const renderInformation = (): void => {
     const { currentMeal, historyMeal } = mealStore.getState();
 
     const mealInformation =
       main.querySelector<HTMLElement>("#meal-information");
+
+    if (
+      currentInformationComponent &&
+      "cleanup" in currentInformationComponent
+    ) {
+      currentInformationComponent.cleanup();
+    }
 
     mealInformation?.replaceChildren();
 
@@ -186,22 +237,32 @@ export const RecipePage = (): HTMLElement => {
         thumbUrl: historyMeal.strMealThumb,
       });
 
+      currentInformationComponent = informationMeal;
       mealInformation?.append(informationMeal);
       return;
     }
 
-    const presentationMeal = PresentationMeal({
-      name: currentMeal?.strMeal!,
-      thumbUrl: currentMeal?.strMealThumb!,
-    });
+    if (currentMeal) {
+      const presentationMeal = PresentationMeal({
+        name: currentMeal.strMeal,
+        thumbUrl: currentMeal.strMealThumb,
+      });
 
-    mealInformation?.append(presentationMeal);
+      currentInformationComponent = presentationMeal;
+      mealInformation?.append(presentationMeal);
+    }
   };
 
-  const renderMealHistories = () => {
+  const renderMealHistories = (): void => {
     const { historiesMeal } = mealStore.getState();
 
     const historiesElement = main.querySelector<HTMLElement>("#histories");
+
+    historyComponents.forEach((component) => {
+      component.cleanup?.();
+    });
+    historyComponents.clear();
+
     historiesElement?.replaceChildren();
 
     historiesMeal.forEach((hm) => {
@@ -209,9 +270,12 @@ export const RecipePage = (): HTMLElement => {
         id: hm.idMeal,
         name: hm.strMeal,
         thumbUrl: hm.strMealThumb,
-        onClick: handleHistoryClick,
+        onClick: (e) => {
+          void handleHistoryClick(e, hm.idMeal);
+        },
       });
 
+      historyComponents.set(hm.idMeal, historyMeal);
       historiesElement?.append(historyMeal);
     });
   };
@@ -219,9 +283,44 @@ export const RecipePage = (): HTMLElement => {
   renderInformation();
   renderMealHistories();
 
-  mealStore.subscribe("currentMeal", renderInformation);
-  mealStore.subscribe("historyMeal", renderInformation);
-  mealStore.subscribe("historiesMeal", renderMealHistories);
+  const unsubscribeCurrentMeal = mealStore.subscribe(
+    "currentMeal",
+    renderInformation
+  );
+  const unsubscribeHistoryMeal = mealStore.subscribe(
+    "historyMeal",
+    renderInformation
+  );
+  const unsubscribeHistoriesMeal = mealStore.subscribe(
+    "historiesMeal",
+    renderMealHistories
+  );
+
+  main.cleanup = (): void => {
+    formSearchMeal?.removeEventListener("submit", handleFormSubmit);
+
+    unsubscribeCurrentMeal();
+    unsubscribeHistoryMeal();
+    unsubscribeHistoriesMeal();
+
+    buttonLikeMeal.cleanup?.();
+    buttonDeleteMeal.cleanup?.();
+    buttonNextMeal.cleanup?.();
+
+    if (
+      currentInformationComponent &&
+      "cleanup" in currentInformationComponent
+    ) {
+      currentInformationComponent.cleanup();
+    }
+
+    historyComponents.forEach((component) => {
+      component.cleanup?.();
+    });
+    historyComponents.clear();
+
+    clearAlert();
+  };
 
   return main;
 };

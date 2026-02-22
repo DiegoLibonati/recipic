@@ -1,11 +1,13 @@
-import { HistoryMeal } from "@src/entities/app";
+import type { HistoryMeal } from "@/types/app";
 
-import { getLocalStorage } from "@src/helpers/getLocalStorage";
+import { getLocalStorage } from "@/helpers/getLocalStorage";
 
-import { LOCAL_STORAGE_HISTORIES_KEY } from "@src/constants/vars";
+import { LOCAL_STORAGE_HISTORIES_KEY } from "@/constants/vars";
 
 export const getHistoriesFromLocalStorage = (): HistoryMeal[] => {
-  const histories = getLocalStorage<HistoryMeal[]>(LOCAL_STORAGE_HISTORIES_KEY);
+  const histories = getLocalStorage(LOCAL_STORAGE_HISTORIES_KEY) as
+    | HistoryMeal[]
+    | null;
 
-  return histories ? histories : [];
+  return histories ?? [];
 };
