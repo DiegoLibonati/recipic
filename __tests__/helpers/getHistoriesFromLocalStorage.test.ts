@@ -1,8 +1,10 @@
-import type { HistoryMeal } from "@/types/app";
-
 import { getHistoriesFromLocalStorage } from "@/helpers/getHistoriesFromLocalStorage";
 
 import { mocksLocalStorage } from "@tests/__mocks__/localStorage.mock";
+import {
+  mockMealHistory,
+  mockMealHistory2,
+} from "@tests/__mocks__/mealHistory.mock";
 
 describe("getHistoriesFromLocalStorage", () => {
   beforeEach(() => {
@@ -14,24 +16,14 @@ describe("getHistoriesFromLocalStorage", () => {
   });
 
   it("should return histories from localStorage", () => {
-    const mockHistories: HistoryMeal[] = [
-      {
-        idMeal: "1",
-        strMeal: "Spaghetti Carbonara",
-        strMealThumb: "https://example.com/image1.jpg",
-      },
-      {
-        idMeal: "2",
-        strMeal: "Pizza Margherita",
-        strMealThumb: "https://example.com/image2.jpg",
-      },
-    ];
-
-    mocksLocalStorage.setItem("histories", JSON.stringify(mockHistories));
+    mocksLocalStorage.setItem(
+      "histories",
+      JSON.stringify([mockMealHistory, mockMealHistory2])
+    );
 
     const result = getHistoriesFromLocalStorage();
 
-    expect(result).toEqual(mockHistories);
+    expect(result).toEqual([mockMealHistory, mockMealHistory2]);
   });
 
   it("should return empty array when no histories in localStorage", () => {
