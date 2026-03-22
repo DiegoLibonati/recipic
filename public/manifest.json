@@ -1,0 +1,21 @@
+{
+  "name": "Recipe IG",
+  "short_name": "Recipe IG",
+  "description": "I made a recipe page. In this page you will be able to search for meals randomly, these searches are given thanks to an API (THE MEAL DB). When you put likes, they will appear at the top in the form of instagram story, if you click on the image you can see the instructions to make that meal or take it out of stories.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
