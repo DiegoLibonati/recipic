@@ -140,7 +140,7 @@ export const RecipePage = (): Page => {
                 type="submit"
                 class="bg-primary w-[20%] text-white rounded-br-lg rounded-tr-lg cursor-pointer p-2 active:scale-75 transition-all"
                 id="button-form"
-                aria-label="search meal"
+                aria-label="Search meal by name"
             >
                 <i class="fa fa-search" aria-hidden="true"></i>
             </button>
@@ -181,7 +181,7 @@ export const RecipePage = (): Page => {
 
   const buttonLikeMeal = ButtonCircle({
     id: "like-meal",
-    ariaLabel: "like meal",
+    ariaLabel: "Add meal to favorites",
     children: '<i class="fa fa-heart" aria-hidden="true"></i>',
     type: "button",
     className: "bg-red-600 cursor-pointer",
@@ -189,7 +189,7 @@ export const RecipePage = (): Page => {
   });
   const buttonDeleteMeal = ButtonCircle({
     id: "delete-meal",
-    ariaLabel: "delete meal",
+    ariaLabel: "Remove meal from favorites",
     children: '<i class="fa fa-trash" aria-hidden="true"></i>',
     type: "button",
     disabled: true,
@@ -198,7 +198,7 @@ export const RecipePage = (): Page => {
   });
   const buttonNextMeal = ButtonCircle({
     id: "next-meal",
-    ariaLabel: "next meal",
+    ariaLabel: "Load next random meal",
     children: '<i class="fa fa-random" aria-hidden="true"></i>',
     type: "button",
     className: "bg-primary cursor-pointer",

@@ -82,7 +82,7 @@ describe("RecipePage", () => {
 
     renderPage();
 
-    const button = screen.getByRole("button", { name: "search meal" });
+    const button = screen.getByRole("button", { name: "Search meal by name" });
     expect(button).toBeInTheDocument();
   });
 
@@ -120,13 +120,13 @@ describe("RecipePage", () => {
     renderPage();
 
     expect(
-      screen.getByRole("button", { name: "like meal" })
+      screen.getByRole("button", { name: "Add meal to favorites" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "delete meal" })
+      screen.getByRole("button", { name: "Remove meal from favorites" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "next meal" })
+      screen.getByRole("button", { name: "Load next random meal" })
     ).toBeInTheDocument();
   });
 
