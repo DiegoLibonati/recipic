@@ -1,7 +1,7 @@
 import type { ButtonCircleComponent } from "@/types/components";
 import type { ButtonCircleProps } from "@/types/props";
 
-export const ButtonCircle = ({
+const ButtonCircle = ({
   id,
   ariaLabel,
   children,
@@ -30,3 +30,5 @@ export const ButtonCircle = ({
 
   return button;
 };
+
+export default ButtonCircle;

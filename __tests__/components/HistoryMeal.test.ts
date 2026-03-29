@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import type { HistoryMealProps } from "@/types/props";
 import type { HistoryMealComponent } from "@/types/components";
 
-import { HistoryMeal } from "@/components/HistoryMeal/HistoryMeal";
+import HistoryMeal from "@/components/HistoryMeal/HistoryMeal";
 
 const renderComponent = (props: HistoryMealProps): HistoryMealComponent => {
   const container = HistoryMeal(props);

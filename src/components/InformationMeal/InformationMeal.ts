@@ -10,7 +10,7 @@ const handleClickCloseInformation = (): void => {
   setButtonActionsStyles();
 };
 
-export const InformationMeal = ({
+const InformationMeal = ({
   name,
   thumbUrl,
   instructions,
@@ -46,3 +46,5 @@ export const InformationMeal = ({
 
   return divRoot;
 };
+
+export default InformationMeal;

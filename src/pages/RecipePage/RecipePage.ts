@@ -5,10 +5,10 @@ import type {
   PresentationMealComponent,
 } from "@/types/components";
 
-import { ButtonCircle } from "@/components/ButtonCircle/ButtonCircle";
-import { PresentationMeal } from "@/components/PresentationMeal/PresentationMeal";
-import { HistoryMeal } from "@/components/HistoryMeal/HistoryMeal";
-import { InformationMeal } from "@/components/InformationMeal/InformationMeal";
+import ButtonCircle from "@/components/ButtonCircle/ButtonCircle";
+import PresentationMeal from "@/components/PresentationMeal/PresentationMeal";
+import HistoryMeal from "@/components/HistoryMeal/HistoryMeal";
+import InformationMeal from "@/components/InformationMeal/InformationMeal";
 
 import { mealsService } from "@/services/mealsService";
 
@@ -119,7 +119,7 @@ const onInit = async (): Promise<void> => {
   }
 };
 
-export const RecipePage = (): Page => {
+const RecipePage = (): Page => {
   void onInit();
 
   const main = document.createElement("main") as Page;
@@ -324,3 +324,5 @@ export const RecipePage = (): Page => {
 
   return main;
 };
+
+export default RecipePage;

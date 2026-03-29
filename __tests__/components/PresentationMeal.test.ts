@@ -3,7 +3,7 @@ import { screen } from "@testing-library/dom";
 import type { PresentationMealProps } from "@/types/props";
 import type { PresentationMealComponent } from "@/types/components";
 
-import { PresentationMeal } from "@/components/PresentationMeal/PresentationMeal";
+import PresentationMeal from "@/components/PresentationMeal/PresentationMeal";
 
 const renderComponent = (
   props: PresentationMealProps

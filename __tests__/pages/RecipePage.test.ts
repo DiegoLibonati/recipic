@@ -11,7 +11,7 @@ import { screen } from "@testing-library/dom";
 
 import type { Page } from "@/types/pages";
 
-import { RecipePage } from "@/pages/RecipePage/RecipePage";
+import RecipePage from "@/pages/RecipePage/RecipePage";
 
 import { mealsService } from "@/services/mealsService";
 

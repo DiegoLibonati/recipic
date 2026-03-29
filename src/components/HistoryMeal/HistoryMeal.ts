@@ -1,7 +1,7 @@
 import type { HistoryMealComponent } from "@/types/components";
 import type { HistoryMealProps } from "@/types/props";
 
-export const HistoryMeal = ({
+const HistoryMeal = ({
   id,
   name,
   thumbUrl,
@@ -27,3 +27,5 @@ export const HistoryMeal = ({
 
   return divRoot;
 };
+
+export default HistoryMeal;

@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import type { ButtonCircleProps } from "@/types/props";
 import type { ButtonCircleComponent } from "@/types/components";
 
-import { ButtonCircle } from "@/components/ButtonCircle/ButtonCircle";
+import ButtonCircle from "@/components/ButtonCircle/ButtonCircle";
 
 const renderComponent = (props: ButtonCircleProps): ButtonCircleComponent => {
   const container = ButtonCircle(props);

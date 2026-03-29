@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import type { InformationMealProps } from "@/types/props";
 import type { InformationMealComponent } from "@/types/components";
 
-import { InformationMeal } from "@/components/InformationMeal/InformationMeal";
+import InformationMeal from "@/components/InformationMeal/InformationMeal";
 
 import { mealStore } from "@/stores/mealStore";
 

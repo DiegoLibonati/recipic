@@ -1,7 +1,7 @@
 import type { PresentationMealComponent } from "@/types/components";
 import type { PresentationMealProps } from "@/types/props";
 
-export const PresentationMeal = ({
+const PresentationMeal = ({
   name,
   thumbUrl,
 }: PresentationMealProps): PresentationMealComponent => {
@@ -13,3 +13,5 @@ export const PresentationMeal = ({
 
   return img;
 };
+
+export default PresentationMeal;
