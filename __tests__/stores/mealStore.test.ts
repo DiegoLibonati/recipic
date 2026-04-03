@@ -1,6 +1,6 @@
 import { MealStore } from "@/stores/mealStore";
 
-import { mocksLocalStorage } from "@tests/__mocks__/localStorage.mock";
+import { mockLocalStorage } from "@tests/__mocks__/localStorage.mock";
 import { mockMeal } from "@tests/__mocks__/meal.mock";
 import {
   mockMealHistory,
@@ -11,7 +11,7 @@ describe("MealStore", () => {
   let store: MealStore;
 
   beforeEach(() => {
-    mocksLocalStorage.clear();
+    mockLocalStorage.clear();
     store = new MealStore({
       currentMeal: null,
       historiesMeal: [],
@@ -20,7 +20,7 @@ describe("MealStore", () => {
   });
 
   afterEach(() => {
-    mocksLocalStorage.clear();
+    mockLocalStorage.clear();
   });
 
   it("should initialize with correct state", () => {
@@ -54,7 +54,7 @@ describe("MealStore", () => {
   it("should save history to localStorage when adding", () => {
     store.addHistory(mockMealHistory);
 
-    const stored = mocksLocalStorage.getItem("histories");
+    const stored = mockLocalStorage.getItem("histories");
     const histories = JSON.parse(stored ?? "[]");
 
     expect(histories).toHaveLength(1);
@@ -75,7 +75,7 @@ describe("MealStore", () => {
     store.addHistory(mockMealHistory);
     store.removeHistory("1");
 
-    const stored = mocksLocalStorage.getItem("histories");
+    const stored = mockLocalStorage.getItem("histories");
     const histories = JSON.parse(stored ?? "[]");
 
     expect(histories).toHaveLength(0);

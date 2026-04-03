@@ -1,6 +1,6 @@
 import { getHistoriesFromLocalStorage } from "@/helpers/getHistoriesFromLocalStorage";
 
-import { mocksLocalStorage } from "@tests/__mocks__/localStorage.mock";
+import { mockLocalStorage } from "@tests/__mocks__/localStorage.mock";
 import {
   mockMealHistory,
   mockMealHistory2,
@@ -8,15 +8,15 @@ import {
 
 describe("getHistoriesFromLocalStorage", () => {
   beforeEach(() => {
-    mocksLocalStorage.clear();
+    mockLocalStorage.clear();
   });
 
   afterEach(() => {
-    mocksLocalStorage.clear();
+    mockLocalStorage.clear();
   });
 
   it("should return histories from localStorage", () => {
-    mocksLocalStorage.setItem(
+    mockLocalStorage.setItem(
       "histories",
       JSON.stringify([mockMealHistory, mockMealHistory2])
     );
@@ -33,7 +33,7 @@ describe("getHistoriesFromLocalStorage", () => {
   });
 
   it("should return empty array when localStorage has null", () => {
-    mocksLocalStorage.setItem("histories", "null");
+    mockLocalStorage.setItem("histories", "null");
 
     const result = getHistoriesFromLocalStorage();
 

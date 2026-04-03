@@ -19,9 +19,9 @@ import { mealStore } from "@/stores/mealStore";
 
 import { mockMeal } from "@tests/__mocks__/meal.mock";
 
-jest.mock("@/services/mealsService");
-
 const mockedMealsService = mealsService as jest.Mocked<typeof mealsService>;
+
+jest.mock("@/services/mealsService");
 
 const renderPage = (): Page => {
   const alertElement = document.createElement("div");

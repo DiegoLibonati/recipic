@@ -13,9 +13,9 @@ import { apiMeals } from "@/services/axios";
 import { mockMeal } from "@tests/__mocks__/meal.mock";
 import { mockMeals } from "@tests/__mocks__/meals.mock";
 
-jest.mock("@/services/axios");
-
 const mockedApiMeals = apiMeals as jest.Mocked<typeof apiMeals>;
+
+jest.mock("@/services/axios");
 
 describe("mealsService", () => {
   afterEach(() => {
