@@ -117,12 +117,12 @@ describe("MealStore", () => {
   });
 
   it("should notify listeners when state changes", () => {
-    const listener = jest.fn();
+    const mockListener = jest.fn();
 
-    store.subscribe("currentMeal", listener);
+    store.subscribe("currentMeal", mockListener);
 
     store.setCurrentMeal(mockMeal);
 
-    expect(listener).toHaveBeenCalledWith(mockMeal);
+    expect(mockListener).toHaveBeenCalledWith(mockMeal);
   });
 });
