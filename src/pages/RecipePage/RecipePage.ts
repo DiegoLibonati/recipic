@@ -10,7 +10,7 @@ import PresentationMeal from "@/components/PresentationMeal/PresentationMeal";
 import HistoryMeal from "@/components/HistoryMeal/HistoryMeal";
 import InformationMeal from "@/components/InformationMeal/InformationMeal";
 
-import { mealsService } from "@/services/mealsService";
+import mealService from "@/services/mealService";
 
 import { setAlert, clearAlert } from "@/helpers/setAlert";
 import { setButtonActionsStyles } from "@/helpers/setButtonActionsStyles";
@@ -24,7 +24,7 @@ const handleHistoryClick = async (_: MouseEvent, id: string): Promise<void> => {
 
   if (!meal) return;
 
-  const meals = await mealsService.getMealByName(meal.strMeal);
+  const meals = await mealService.getMealByName(meal.strMeal);
 
   if (!meals || meals.length === 0) return;
 
@@ -81,7 +81,7 @@ const handleSearchMeal = async (
     return;
   }
 
-  const mealByName = await mealsService.getMealByName(value);
+  const mealByName = await mealService.getMealByName(value);
 
   if (!mealByName || mealByName.length === 0) {
     setAlert("There is no meal with the name entered.", "error");
@@ -111,7 +111,7 @@ const handleNextMeal = async (): Promise<void> => {
 };
 
 const onInit = async (): Promise<void> => {
-  const meal = await mealsService.getMeal();
+  const meal = await mealService.getMeal();
 
   if (meal.length > 0) {
     mealStore.setCurrentMeal(meal[0]!);

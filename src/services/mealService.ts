@@ -4,7 +4,7 @@ import type { Meal } from "@/types/app";
 
 import { apiMeals } from "@/services/axios";
 
-export const mealsService = {
+const mealService = {
   getMeal: async (): Promise<Meal[]> => {
     try {
       const request = await apiMeals.get<{ meals: Meal[] }>(`/random.php`);
@@ -35,3 +35,5 @@ export const mealsService = {
     }
   },
 };
+
+export default mealService;

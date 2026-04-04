@@ -7,7 +7,7 @@ jest.mock("@/constants/envs", () => {
   };
 });
 
-import { mealsService } from "@/services/mealsService";
+import mealService from "@/services/mealService";
 import { apiMeals } from "@/services/axios";
 
 import { mockMeal } from "@tests/__mocks__/meal.mock";
@@ -17,7 +17,7 @@ const mockedApiMeals = apiMeals as jest.Mocked<typeof apiMeals>;
 
 jest.mock("@/services/axios");
 
-describe("mealsService", () => {
+describe("mealService", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -28,7 +28,7 @@ describe("mealsService", () => {
         data: { meals: [mockMeal] },
       });
 
-      const result = await mealsService.getMeal();
+      const result = await mealService.getMeal();
 
       expect(result).toEqual([mockMeal]);
       expect(mockedApiMeals.get).toHaveBeenCalledWith("/random.php");
@@ -37,7 +37,7 @@ describe("mealsService", () => {
     it("should throw error when fetch fails", async () => {
       mockedApiMeals.get.mockRejectedValue(new Error("Network error"));
 
-      await expect(mealsService.getMeal()).rejects.toThrow();
+      await expect(mealService.getMeal()).rejects.toThrow();
     });
   });
 
@@ -47,7 +47,7 @@ describe("mealsService", () => {
         data: { meals: mockMeals },
       });
 
-      const result = await mealsService.getMealByName("Teriyaki");
+      const result = await mealService.getMealByName("Teriyaki");
 
       expect(result).toEqual(mockMeals);
       expect(mockedApiMeals.get).toHaveBeenCalledWith("/search.php?s=Teriyaki");
@@ -58,7 +58,7 @@ describe("mealsService", () => {
         data: { meals: null },
       });
 
-      const result = await mealsService.getMealByName("NonExistent");
+      const result = await mealService.getMealByName("NonExistent");
 
       expect(result).toBeNull();
     });
@@ -66,7 +66,7 @@ describe("mealsService", () => {
     it("should throw error when fetch fails", async () => {
       mockedApiMeals.get.mockRejectedValue(new Error("Network error"));
 
-      await expect(mealsService.getMealByName("Test")).rejects.toThrow();
+      await expect(mealService.getMealByName("Test")).rejects.toThrow();
     });
   });
 });

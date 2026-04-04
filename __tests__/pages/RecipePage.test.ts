@@ -13,15 +13,15 @@ import type { Page } from "@/types/pages";
 
 import RecipePage from "@/pages/RecipePage/RecipePage";
 
-import { mealsService } from "@/services/mealsService";
+import mealService from "@/services/mealService";
 
 import { mealStore } from "@/stores/mealStore";
 
 import { mockMeal } from "@tests/__mocks__/meal.mock";
 
-const mockedMealsService = mealsService as jest.Mocked<typeof mealsService>;
+const mockedMealService = mealService as jest.Mocked<typeof mealService>;
 
-jest.mock("@/services/mealsService");
+jest.mock("@/services/mealService");
 
 const renderPage = (): Page => {
   const alertElement = document.createElement("div");
@@ -51,7 +51,7 @@ describe("RecipePage", () => {
   });
 
   it("should render the page with correct structure", () => {
-    mockedMealsService.getMeal.mockResolvedValue([mockMeal]);
+    mockedMealService.getMeal.mockResolvedValue([mockMeal]);
 
     renderPage();
 
@@ -60,7 +60,7 @@ describe("RecipePage", () => {
   });
 
   it("should render search form", () => {
-    mockedMealsService.getMeal.mockResolvedValue([mockMeal]);
+    mockedMealService.getMeal.mockResolvedValue([mockMeal]);
 
     renderPage();
 
@@ -69,7 +69,7 @@ describe("RecipePage", () => {
   });
 
   it("should render search input", () => {
-    mockedMealsService.getMeal.mockResolvedValue([mockMeal]);
+    mockedMealService.getMeal.mockResolvedValue([mockMeal]);
 
     renderPage();
 
@@ -78,7 +78,7 @@ describe("RecipePage", () => {
   });
 
   it("should render search button", () => {
-    mockedMealsService.getMeal.mockResolvedValue([mockMeal]);
+    mockedMealService.getMeal.mockResolvedValue([mockMeal]);
 
     renderPage();
 
@@ -87,7 +87,7 @@ describe("RecipePage", () => {
   });
 
   it("should render histories section", () => {
-    mockedMealsService.getMeal.mockResolvedValue([mockMeal]);
+    mockedMealService.getMeal.mockResolvedValue([mockMeal]);
 
     renderPage();
 
@@ -96,7 +96,7 @@ describe("RecipePage", () => {
   });
 
   it("should render meal information section", () => {
-    mockedMealsService.getMeal.mockResolvedValue([mockMeal]);
+    mockedMealService.getMeal.mockResolvedValue([mockMeal]);
 
     renderPage();
 
@@ -105,7 +105,7 @@ describe("RecipePage", () => {
   });
 
   it("should render button actions section", () => {
-    mockedMealsService.getMeal.mockResolvedValue([mockMeal]);
+    mockedMealService.getMeal.mockResolvedValue([mockMeal]);
 
     renderPage();
 
@@ -115,7 +115,7 @@ describe("RecipePage", () => {
   });
 
   it("should render action buttons", () => {
-    mockedMealsService.getMeal.mockResolvedValue([mockMeal]);
+    mockedMealService.getMeal.mockResolvedValue([mockMeal]);
 
     renderPage();
 
@@ -131,7 +131,7 @@ describe("RecipePage", () => {
   });
 
   it("should cleanup on page cleanup", () => {
-    mockedMealsService.getMeal.mockResolvedValue([mockMeal]);
+    mockedMealService.getMeal.mockResolvedValue([mockMeal]);
 
     const page = renderPage();
 
