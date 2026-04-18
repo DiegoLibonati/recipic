@@ -1,7 +1,7 @@
 {
-  "name": "Recipe IG",
-  "short_name": "Recipe IG",
-  "description": "I made a recipe page. In this page you will be able to search for meals randomly, these searches are given thanks to an API (THE MEAL DB). When you put likes, they will appear at the top in the form of instagram story, if you click on the image you can see the instructions to make that meal or take it out of stories.",
+  "name": "Recipic",
+  "short_name": "Recipic",
+  "description": "Recipic is a meal discovery app that presents recipes in a visual, story-like interface inspired by Instagram Stories. Instead of scrolling through long lists, you browse one meal at a time — each one displayed as a full image card that takes center stage.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -1,21 +1,20 @@
-import { mockEnvs } from "@tests/__mocks__/envs.mock";
-
-jest.mock("@/constants/envs", () => {
-  return {
-    __esModule: true,
-    default: mockEnvs,
-  };
-});
-
 import mealService from "@/services/mealService";
+
 import { apiMeals } from "@/services/axios";
 
-import { mockMeal } from "@tests/__mocks__/meal.mock";
-import { mockMeals } from "@tests/__mocks__/meals.mock";
+import { mockMeals, mockMealsSearchByName } from "@tests/__mocks__/meals.mock";
 
-const mockedApiMeals = apiMeals as jest.Mocked<typeof apiMeals>;
+const mockApiMealsGet = apiMeals.get as jest.MockedFunction<
+  typeof apiMeals.get
+>;
 
 jest.mock("@/services/axios");
+
+const mockAxiosError = (status: number, message: string): Error =>
+  Object.assign(new Error(message), {
+    isAxiosError: true,
+    response: { status },
+  });
 
 describe("mealService", () => {
   afterEach(() => {
@@ -23,50 +22,82 @@ describe("mealService", () => {
   });
 
   describe("getMeal", () => {
-    it("should fetch random meal successfully", async () => {
-      mockedApiMeals.get.mockResolvedValue({
-        data: { meals: [mockMeal] },
+    describe("success", () => {
+      it("should return an array of meals", async () => {
+        mockApiMealsGet.mockResolvedValue({ data: mockMeals });
+        const result = await mealService.getMeal();
+        expect(result).toEqual(mockMeals.meals);
       });
 
-      const result = await mealService.getMeal();
-
-      expect(result).toEqual([mockMeal]);
-      expect(mockedApiMeals.get).toHaveBeenCalledWith("/random.php");
+      it("should call the /random.php endpoint", async () => {
+        mockApiMealsGet.mockResolvedValue({ data: mockMeals });
+        await mealService.getMeal();
+        expect(mockApiMealsGet).toHaveBeenCalledWith("/random.php");
+      });
     });
 
-    it("should throw error when fetch fails", async () => {
-      mockedApiMeals.get.mockRejectedValue(new Error("Network error"));
+    describe("error handling", () => {
+      it("should throw an error with HTTP status when an axios error occurs", async () => {
+        mockApiMealsGet.mockRejectedValue(
+          mockAxiosError(500, "Internal Server Error")
+        );
+        await expect(mealService.getMeal()).rejects.toThrow("HTTP error!");
+      });
 
-      await expect(mealService.getMeal()).rejects.toThrow();
+      it("should include the response status in the error message", async () => {
+        mockApiMealsGet.mockRejectedValue(
+          mockAxiosError(503, "Service Unavailable")
+        );
+        await expect(mealService.getMeal()).rejects.toThrow("503");
+      });
+
+      it("should rethrow non-axios errors as-is", async () => {
+        mockApiMealsGet.mockRejectedValue(new Error("Unknown error"));
+        await expect(mealService.getMeal()).rejects.toThrow("Unknown error");
+      });
     });
   });
 
   describe("getMealByName", () => {
-    it("should fetch meal by name successfully", async () => {
-      mockedApiMeals.get.mockResolvedValue({
-        data: { meals: mockMeals },
+    describe("success", () => {
+      it("should return an array of meals when found", async () => {
+        mockApiMealsGet.mockResolvedValue({ data: mockMealsSearchByName });
+        const result = await mealService.getMealByName("Mandazi");
+        expect(result).toEqual(mockMealsSearchByName.meals);
       });
 
-      const result = await mealService.getMealByName("Teriyaki");
-
-      expect(result).toEqual(mockMeals);
-      expect(mockedApiMeals.get).toHaveBeenCalledWith("/search.php?s=Teriyaki");
-    });
-
-    it("should return null when no meals found", async () => {
-      mockedApiMeals.get.mockResolvedValue({
-        data: { meals: null },
+      it("should call the /search.php endpoint with the meal name", async () => {
+        mockApiMealsGet.mockResolvedValue({ data: mockMealsSearchByName });
+        await mealService.getMealByName("Mandazi");
+        expect(mockApiMealsGet).toHaveBeenCalledWith("/search.php?s=Mandazi");
       });
 
-      const result = await mealService.getMealByName("NonExistent");
-
-      expect(result).toBeNull();
+      it("should return null when no meals match the search", async () => {
+        mockApiMealsGet.mockResolvedValue({ data: { meals: null } });
+        const result = await mealService.getMealByName("nonexistent");
+        expect(result).toBeNull();
+      });
     });
 
-    it("should throw error when fetch fails", async () => {
-      mockedApiMeals.get.mockRejectedValue(new Error("Network error"));
+    describe("error handling", () => {
+      it("should throw an error with HTTP status when an axios error occurs", async () => {
+        mockApiMealsGet.mockRejectedValue(mockAxiosError(404, "Not Found"));
+        await expect(mealService.getMealByName("test")).rejects.toThrow(
+          "HTTP error!"
+        );
+      });
 
-      await expect(mealService.getMealByName("Test")).rejects.toThrow();
+      it("should include the response status in the error message", async () => {
+        mockApiMealsGet.mockRejectedValue(mockAxiosError(404, "Not Found"));
+        await expect(mealService.getMealByName("test")).rejects.toThrow("404");
+      });
+
+      it("should rethrow non-axios errors as-is", async () => {
+        mockApiMealsGet.mockRejectedValue(new Error("Network failure"));
+        await expect(mealService.getMealByName("test")).rejects.toThrow(
+          "Network failure"
+        );
+      });
     });
   });
 });

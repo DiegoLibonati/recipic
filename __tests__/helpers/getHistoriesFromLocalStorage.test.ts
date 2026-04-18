@@ -1,42 +1,50 @@
 import { getHistoriesFromLocalStorage } from "@/helpers/getHistoriesFromLocalStorage";
 
-import { mockLocalStorage } from "@tests/__mocks__/localStorage.mock";
 import {
   mockMealHistory,
   mockMealHistory2,
 } from "@tests/__mocks__/mealHistory.mock";
 
+const LOCAL_STORAGE_HISTORIES_KEY = "histories";
+
 describe("getHistoriesFromLocalStorage", () => {
   beforeEach(() => {
-    mockLocalStorage.clear();
+    localStorage.clear();
   });
 
-  afterEach(() => {
-    mockLocalStorage.clear();
+  describe("when localStorage is empty", () => {
+    it("should return an empty array", () => {
+      expect(getHistoriesFromLocalStorage()).toEqual([]);
+    });
   });
 
-  it("should return histories from localStorage", () => {
-    mockLocalStorage.setItem(
-      "histories",
-      JSON.stringify([mockMealHistory, mockMealHistory2])
-    );
-
-    const result = getHistoriesFromLocalStorage();
-
-    expect(result).toEqual([mockMealHistory, mockMealHistory2]);
+  describe("when localStorage has one history entry", () => {
+    it("should return the parsed histories array", () => {
+      localStorage.setItem(
+        LOCAL_STORAGE_HISTORIES_KEY,
+        JSON.stringify([mockMealHistory])
+      );
+      expect(getHistoriesFromLocalStorage()).toEqual([mockMealHistory]);
+    });
   });
 
-  it("should return empty array when no histories in localStorage", () => {
-    const result = getHistoriesFromLocalStorage();
-
-    expect(result).toEqual([]);
+  describe("when localStorage has multiple history entries", () => {
+    it("should return all history entries", () => {
+      localStorage.setItem(
+        LOCAL_STORAGE_HISTORIES_KEY,
+        JSON.stringify([mockMealHistory, mockMealHistory2])
+      );
+      expect(getHistoriesFromLocalStorage()).toEqual([
+        mockMealHistory,
+        mockMealHistory2,
+      ]);
+    });
   });
 
-  it("should return empty array when localStorage has null", () => {
-    mockLocalStorage.setItem("histories", "null");
-
-    const result = getHistoriesFromLocalStorage();
-
-    expect(result).toEqual([]);
+  describe("edge cases", () => {
+    it("should return an empty array when the stored value is null", () => {
+      localStorage.setItem(LOCAL_STORAGE_HISTORIES_KEY, JSON.stringify(null));
+      expect(getHistoriesFromLocalStorage()).toEqual([]);
+    });
   });
 });

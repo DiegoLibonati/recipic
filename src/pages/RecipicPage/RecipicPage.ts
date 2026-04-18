@@ -119,7 +119,7 @@ const onInit = async (): Promise<void> => {
   }
 };
 
-const RecipePage = (): Page => {
+const RecipicPage = (): Page => {
   void onInit();
 
   const main = document.createElement("main") as Page;
@@ -325,4 +325,4 @@ const RecipePage = (): Page => {
   return main;
 };
 
-export default RecipePage;
+export default RecipicPage;

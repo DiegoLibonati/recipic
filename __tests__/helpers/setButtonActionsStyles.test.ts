@@ -3,85 +3,127 @@ import { setButtonActionsStyles } from "@/helpers/setButtonActionsStyles";
 import { mealStore } from "@/stores/mealStore";
 
 import { mockMeal } from "@tests/__mocks__/meal.mock";
+import { mockMealHistory } from "@tests/__mocks__/mealHistory.mock";
+
+const setupDOM = (): {
+  likeMeal: HTMLButtonElement;
+  deleteMeal: HTMLButtonElement;
+} => {
+  const likeMeal = document.createElement("button");
+  likeMeal.id = "like-meal";
+
+  const deleteMeal = document.createElement("button");
+  deleteMeal.id = "delete-meal";
+
+  document.body.appendChild(likeMeal);
+  document.body.appendChild(deleteMeal);
+
+  return { likeMeal, deleteMeal };
+};
 
 describe("setButtonActionsStyles", () => {
-  beforeEach(() => {
-    const likeMeal = document.createElement("button");
-    likeMeal.id = "like-meal";
-    const deleteMeal = document.createElement("button");
-    deleteMeal.id = "delete-meal";
-
-    document.body.appendChild(likeMeal);
-    document.body.appendChild(deleteMeal);
-
+  afterEach(() => {
+    document.body.innerHTML = "";
     mealStore.setState({
       currentMeal: null,
       historyMeal: null,
       historiesMeal: [],
     });
+    localStorage.clear();
   });
 
-  afterEach(() => {
-    document.body.innerHTML = "";
+  describe("when DOM elements are missing", () => {
+    it("should not throw when buttons are not in the DOM", () => {
+      expect(() => {
+        setButtonActionsStyles();
+      }).not.toThrow();
+    });
   });
 
-  it("should enable like button and disable delete button when no meal in history", () => {
-    setButtonActionsStyles();
-
-    const likeMeal = document.querySelector<HTMLButtonElement>("#like-meal");
-    const deleteMeal =
-      document.querySelector<HTMLButtonElement>("#delete-meal");
-
-    expect(likeMeal?.disabled).toBe(false);
-    expect(likeMeal).not.toHaveClass(
-      "[&&]:bg-gray-200",
-      "[&&]:cursor-not-allowed"
-    );
-
-    expect(deleteMeal?.disabled).toBe(true);
-    expect(deleteMeal).toHaveClass("[&&]:bg-gray-200", "cursor-not-allowed");
-    expect(deleteMeal).not.toHaveClass("[&&]:bg-success");
-  });
-
-  it("should disable like button and enable delete button when historyMeal is set", () => {
-    mealStore.setHistoryMeal(mockMeal);
-    setButtonActionsStyles();
-
-    const likeMeal = document.querySelector<HTMLButtonElement>("#like-meal");
-    const deleteMeal =
-      document.querySelector<HTMLButtonElement>("#delete-meal");
-
-    expect(likeMeal?.disabled).toBe(true);
-    expect(likeMeal).toHaveClass("[&&]:bg-gray-200", "[&&]:cursor-not-allowed");
-
-    expect(deleteMeal?.disabled).toBe(false);
-    expect(deleteMeal).toHaveClass("[&&]:bg-success");
-    expect(deleteMeal).not.toHaveClass("[&&]:bg-gray-200");
-  });
-
-  it("should disable like button when current meal is in history", () => {
-    mealStore.setCurrentMeal(mockMeal);
-    mealStore.addHistory({
-      idMeal: mockMeal.idMeal,
-      strMeal: mockMeal.strMeal,
-      strMealThumb: mockMeal.strMealThumb,
+  describe("when historyMeal is set in the store", () => {
+    it("should disable the like button", () => {
+      const { likeMeal } = setupDOM();
+      mealStore.setHistoryMeal(mockMeal);
+      setButtonActionsStyles();
+      expect(likeMeal).toBeDisabled();
     });
 
-    setButtonActionsStyles();
+    it("should enable the delete button", () => {
+      const { deleteMeal } = setupDOM();
+      mealStore.setHistoryMeal(mockMeal);
+      setButtonActionsStyles();
+      expect(deleteMeal).not.toBeDisabled();
+    });
 
-    const likeMeal = document.querySelector<HTMLButtonElement>("#like-meal");
-    const deleteMeal =
-      document.querySelector<HTMLButtonElement>("#delete-meal");
+    it("should add disabled styles to the like button", () => {
+      const { likeMeal } = setupDOM();
+      mealStore.setHistoryMeal(mockMeal);
+      setButtonActionsStyles();
+      expect(likeMeal).toHaveClass(
+        "[&&]:bg-gray-200",
+        "[&&]:cursor-not-allowed"
+      );
+    });
 
-    expect(likeMeal?.disabled).toBe(true);
-    expect(deleteMeal?.disabled).toBe(false);
+    it("should add success styles to the delete button", () => {
+      const { deleteMeal } = setupDOM();
+      mealStore.setHistoryMeal(mockMeal);
+      setButtonActionsStyles();
+      expect(deleteMeal).toHaveClass("[&&]:bg-success");
+    });
   });
 
-  it("should not throw error when buttons do not exist", () => {
-    document.body.innerHTML = "";
-
-    expect(() => {
+  describe("when currentMeal is in history", () => {
+    it("should disable the like button", () => {
+      const { likeMeal } = setupDOM();
+      mealStore.setCurrentMeal({ ...mockMeal, idMeal: mockMealHistory.idMeal });
+      mealStore.addHistory(mockMealHistory);
       setButtonActionsStyles();
-    }).not.toThrow();
+      expect(likeMeal).toBeDisabled();
+    });
+
+    it("should enable the delete button", () => {
+      const { deleteMeal } = setupDOM();
+      mealStore.setCurrentMeal({ ...mockMeal, idMeal: mockMealHistory.idMeal });
+      mealStore.addHistory(mockMealHistory);
+      setButtonActionsStyles();
+      expect(deleteMeal).not.toBeDisabled();
+    });
+  });
+
+  describe("when currentMeal is not in history and no historyMeal", () => {
+    it("should enable the like button", () => {
+      const { likeMeal } = setupDOM();
+      likeMeal.disabled = true;
+      mealStore.setCurrentMeal(mockMeal);
+      setButtonActionsStyles();
+      expect(likeMeal).not.toBeDisabled();
+    });
+
+    it("should disable the delete button", () => {
+      const { deleteMeal } = setupDOM();
+      mealStore.setCurrentMeal(mockMeal);
+      setButtonActionsStyles();
+      expect(deleteMeal).toBeDisabled();
+    });
+
+    it("should remove disabled styles from the like button", () => {
+      const { likeMeal } = setupDOM();
+      likeMeal.classList.add("[&&]:bg-gray-200", "[&&]:cursor-not-allowed");
+      mealStore.setCurrentMeal(mockMeal);
+      setButtonActionsStyles();
+      expect(likeMeal).not.toHaveClass(
+        "[&&]:bg-gray-200",
+        "[&&]:cursor-not-allowed"
+      );
+    });
+
+    it("should remove success styles from the delete button", () => {
+      const { deleteMeal } = setupDOM();
+      deleteMeal.classList.add("[&&]:bg-success");
+      mealStore.setCurrentMeal(mockMeal);
+      setButtonActionsStyles();
+      expect(deleteMeal).not.toHaveClass("[&&]:bg-success");
+    });
   });
 });

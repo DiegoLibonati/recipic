@@ -1,4 +1,4 @@
-# RecipeIG
+# Recipic
 
 ## Educational Purpose
 
@@ -17,7 +17,21 @@ The application will open automatically at `http://localhost:3000`
 
 ## Description
 
-I made a recipe page. In this page you will be able to search for meals randomly, these searches are given thanks to an API (THE MEAL DB). When you put likes, they will appear at the top in the form of instagram story, if you click on the image you can see the instructions to make that meal or take it out of stories.
+**Recipic** is a meal discovery app that presents recipes in a visual, story-like interface inspired by Instagram Stories. Instead of scrolling through long lists, you browse one meal at a time — each one displayed as a full image card that takes center stage.
+
+The app connects to [TheMealDB](https://www.themealdb.com), a free public API that provides detailed meal data including name, category, origin, thumbnail image, ingredients, and step-by-step cooking instructions.
+
+Every time you open the app, a random meal is loaded automatically. From there you have full control over what happens next:
+
+- **Random discovery:** Hit the shuffle button to load a completely new random meal. Each click fetches a fresh suggestion from the API so you can keep browsing until something catches your eye.
+- **Search by name:** Use the search bar at the top to look up a specific meal by name. If a match is found in the database, it gets added directly to your favorites list.
+- **Favorites (your story bar):** When you find a meal you like, click the heart button to save it. Saved meals appear at the top of the screen as circular thumbnails — exactly like Instagram Stories. The bar scrolls horizontally so you can save as many meals as you want.
+- **Meal detail view:** Click any thumbnail in your favorites bar to open that meal's full instruction card. The view replaces the current image with a scrollable panel showing the complete recipe: the meal name, its photo, and the full cooking instructions. A close button lets you dismiss it and return to the current meal view.
+- **Remove from favorites:** When viewing a saved meal's instructions, the delete button becomes active. Clicking it removes the meal from your favorites bar instantly.
+
+Your favorites are saved to `localStorage`, so they persist across page refreshes. Every time the app loads, it restores your saved meals automatically.
+
+The UI reacts to state changes in real time: adding or removing a meal updates the favorites bar immediately, the like and delete buttons enable or disable themselves depending on whether the current meal is already saved, and alerts appear briefly to confirm every action (added to favorites, removed, new meal loaded, errors).
 
 ## Technologies used
 
@@ -63,11 +77,7 @@ I made a recipe page. In this page you will be able to search for meals randomly
 
 ## Portfolio Link
 
-[`https://www.diegolibonati.com.ar/#/project/RecipeIG`](https://www.diegolibonati.com.ar/#/project/RecipeIG)
-
-## Video
-
-https://github.com/DiegoLibonati/Recipe-Page/assets/99032604/8256c7f2-8002-4766-a34d-a476cbe4dda8
+[`https://www.diegolibonati.com.ar/#/project/recipic`](https://www.diegolibonati.com.ar/#/project/recipic)
 
 ## Testing
 
