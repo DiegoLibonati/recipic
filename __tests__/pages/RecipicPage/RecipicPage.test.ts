@@ -12,14 +12,16 @@ import { mealStore } from "@/stores/mealStore";
 import { mockMeal, mockMealByName } from "@tests/__mocks__/meal.mock";
 import { mockMealHistory } from "@tests/__mocks__/mealHistory.mock";
 
-const mockGetMeal = mealService.getMeal as jest.MockedFunction<
-  typeof mealService.getMeal
->;
-const mockGetMealByName = mealService.getMealByName as jest.MockedFunction<
-  typeof mealService.getMealByName
->;
+const mockGetMeal = mealService.getMeal as jest.Mock;
+const mockGetMealByName = mealService.getMealByName as jest.Mock;
 
-jest.mock("@/services/mealService");
+jest.mock("@/services/mealService", () => ({
+  __esModule: true,
+  default: {
+    getMeal: jest.fn(),
+    getMealByName: jest.fn(),
+  },
+}));
 
 const setupAlertDOM = (): void => {
   const alertElement = document.createElement("div");
