@@ -67,7 +67,7 @@ describe("RecipicPage", () => {
   describe("rendering", () => {
     it("should render a main element", () => {
       renderPage();
-      expect(document.querySelector("main")).toBeInTheDocument();
+      expect(document.querySelector<HTMLElement>("main")).toBeInTheDocument();
     });
 
     it("should render a text input for searching meals", () => {
@@ -151,9 +151,9 @@ describe("RecipicPage", () => {
       await user.click(
         screen.getByRole("button", { name: "Search meal by name" })
       );
-      expect(document.querySelector("#alert-text")).toHaveTextContent(
-        "You must enter a valid name."
-      );
+      expect(
+        document.querySelector<HTMLDivElement>("#alert-text")
+      ).toHaveTextContent("You must enter a valid name.");
     });
 
     it("should show an error alert when no meal is found", async () => {
@@ -165,9 +165,9 @@ describe("RecipicPage", () => {
         screen.getByRole("button", { name: "Search meal by name" })
       );
       await waitFor(() => {
-        expect(document.querySelector("#alert-text")).toHaveTextContent(
-          "There is no meal with the name entered."
-        );
+        expect(
+          document.querySelector<HTMLDivElement>("#alert-text")
+        ).toHaveTextContent("There is no meal with the name entered.");
       });
     });
 
@@ -183,9 +183,9 @@ describe("RecipicPage", () => {
         screen.getByRole("button", { name: "Search meal by name" })
       );
       await waitFor(() => {
-        expect(document.querySelector("#alert-text")).toHaveTextContent(
-          "This meal is already in your favorites."
-        );
+        expect(
+          document.querySelector<HTMLDivElement>("#alert-text")
+        ).toHaveTextContent("This meal is already in your favorites.");
       });
     });
 
@@ -222,7 +222,9 @@ describe("RecipicPage", () => {
         screen.getByRole("button", { name: "Search meal by name" })
       );
       await waitFor(() => {
-        expect(document.querySelector("#alert-text")).toHaveTextContent(
+        expect(
+          document.querySelector<HTMLDivElement>("#alert-text")
+        ).toHaveTextContent(
           `${mockMealByName.strMeal} has been added to favorites.`
         );
       });
@@ -251,9 +253,9 @@ describe("RecipicPage", () => {
       await user.click(
         screen.getByRole("button", { name: "Add meal to favorites" })
       );
-      expect(document.querySelector("#alert-text")).toHaveTextContent(
-        `${mockMeal.strMeal} has been added to favorites.`
-      );
+      expect(
+        document.querySelector<HTMLDivElement>("#alert-text")
+      ).toHaveTextContent(`${mockMeal.strMeal} has been added to favorites.`);
     });
   });
 
@@ -285,9 +287,9 @@ describe("RecipicPage", () => {
       await user.click(
         screen.getByRole("button", { name: "Remove meal from favorites" })
       );
-      expect(document.querySelector("#alert-text")).toHaveTextContent(
-        "has been removed from favorites."
-      );
+      expect(
+        document.querySelector<HTMLDivElement>("#alert-text")
+      ).toHaveTextContent("has been removed from favorites.");
     });
   });
 
