@@ -153,7 +153,7 @@ describe("RecipicPage", () => {
         screen.getByRole("button", { name: "Search meal by name" })
       );
       expect(
-        document.querySelector<HTMLDivElement>("#alert-text")
+        document.querySelector<HTMLHeadingElement>("#alert-text")
       ).toHaveTextContent("You must enter a valid name.");
     });
 
@@ -167,7 +167,7 @@ describe("RecipicPage", () => {
       );
       await waitFor(() => {
         expect(
-          document.querySelector<HTMLDivElement>("#alert-text")
+          document.querySelector<HTMLHeadingElement>("#alert-text")
         ).toHaveTextContent("There is no meal with the name entered.");
       });
     });
@@ -185,7 +185,7 @@ describe("RecipicPage", () => {
       );
       await waitFor(() => {
         expect(
-          document.querySelector<HTMLDivElement>("#alert-text")
+          document.querySelector<HTMLHeadingElement>("#alert-text")
         ).toHaveTextContent("This meal is already in your favorites.");
       });
     });
@@ -224,7 +224,7 @@ describe("RecipicPage", () => {
       );
       await waitFor(() => {
         expect(
-          document.querySelector<HTMLDivElement>("#alert-text")
+          document.querySelector<HTMLHeadingElement>("#alert-text")
         ).toHaveTextContent(
           `${mockMealByName.strMeal} has been added to favorites.`
         );
@@ -255,7 +255,7 @@ describe("RecipicPage", () => {
         screen.getByRole("button", { name: "Add meal to favorites" })
       );
       expect(
-        document.querySelector<HTMLDivElement>("#alert-text")
+        document.querySelector<HTMLHeadingElement>("#alert-text")
       ).toHaveTextContent(`${mockMeal.strMeal} has been added to favorites.`);
     });
   });
@@ -289,7 +289,7 @@ describe("RecipicPage", () => {
         screen.getByRole("button", { name: "Remove meal from favorites" })
       );
       expect(
-        document.querySelector<HTMLDivElement>("#alert-text")
+        document.querySelector<HTMLHeadingElement>("#alert-text")
       ).toHaveTextContent("has been removed from favorites.");
     });
   });
