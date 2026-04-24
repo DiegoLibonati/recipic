@@ -20,6 +20,7 @@ const renderComponent = (
 describe("PresentationMeal", () => {
   afterEach(() => {
     document.body.innerHTML = "";
+    jest.clearAllMocks();
   });
 
   describe("rendering", () => {

@@ -12,8 +12,8 @@ import { mealStore } from "@/stores/mealStore";
 import { mockMeal, mockMealByName } from "@tests/__mocks__/meal.mock";
 import { mockMealHistory } from "@tests/__mocks__/mealHistory.mock";
 
-const mockGetMeal = mealService.getMeal as jest.Mock;
-const mockGetMealByName = mealService.getMealByName as jest.Mock;
+const mockGetMeal = jest.mocked(mealService.getMeal);
+const mockGetMealByName = jest.mocked(mealService.getMealByName);
 
 jest.mock("@/services/mealService", () => ({
   __esModule: true,
@@ -56,6 +56,7 @@ describe("RecipicPage", () => {
 
   afterEach(() => {
     document.body.innerHTML = "";
+    jest.clearAllMocks();
     mealStore.setState({
       currentMeal: null,
       historyMeal: null,

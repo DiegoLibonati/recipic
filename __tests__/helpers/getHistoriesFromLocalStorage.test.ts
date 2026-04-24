@@ -8,7 +8,7 @@ import {
 const LOCAL_STORAGE_HISTORIES_KEY = "histories";
 
 describe("getHistoriesFromLocalStorage", () => {
-  beforeEach(() => {
+  afterEach(() => {
     localStorage.clear();
   });
 

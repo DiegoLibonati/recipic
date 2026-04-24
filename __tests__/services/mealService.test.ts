@@ -1,15 +1,18 @@
-import axios from "axios";
+import { isAxiosError } from "axios";
 
 import mealService from "@/services/mealService";
-
 import { apiMeals } from "@/services/axios";
 
 import { mockMeals, mockMealsSearchByName } from "@tests/__mocks__/meals.mock";
 
-const mockApiGet = apiMeals.get as jest.Mock;
-const mockIsAxiosError = axios.isAxiosError as unknown as jest.Mock;
+const mockApiGet = jest.mocked(apiMeals.get);
+const mockIsAxiosError = jest.mocked(isAxiosError);
 
-jest.mock("axios");
+jest.mock("axios", () => ({
+  ...(jest.requireActual("axios") as unknown as object),
+  isAxiosError: jest.fn(),
+}));
+
 jest.mock("@/services/axios", () => ({
   apiMeals: {
     get: jest.fn(),
@@ -20,8 +23,11 @@ const mockAxiosSuccess = (data: unknown): void => {
   mockApiGet.mockResolvedValue({ data });
 };
 
-const mockAxiosError = (status: number, message: string): void => {
-  mockApiGet.mockRejectedValue({ response: { status }, message });
+const mockAxiosError = (status: number | undefined, message: string): void => {
+  mockApiGet.mockRejectedValue({
+    response: status !== undefined ? { status } : undefined,
+    message,
+  });
   mockIsAxiosError.mockReturnValue(true);
 };
 

@@ -99,7 +99,8 @@ describe("Store", () => {
   describe("subscribe", () => {
     it("should return an unsubscribe function", () => {
       const store = createStore();
-      const unsubscribe = store.subscribe("count", jest.fn());
+      const mockDummyListener = jest.fn();
+      const unsubscribe = store.subscribe("count", mockDummyListener);
       expect(typeof unsubscribe).toBe("function");
     });
 

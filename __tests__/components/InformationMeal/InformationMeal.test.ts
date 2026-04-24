@@ -31,6 +31,7 @@ describe("InformationMeal", () => {
 
   afterEach(() => {
     document.body.innerHTML = "";
+    jest.clearAllMocks();
     mealStore.setState({
       currentMeal: null,
       historyMeal: null,

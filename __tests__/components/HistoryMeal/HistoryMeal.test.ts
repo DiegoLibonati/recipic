@@ -26,6 +26,7 @@ const renderComponent = (
 describe("HistoryMeal", () => {
   afterEach(() => {
     document.body.innerHTML = "";
+    jest.clearAllMocks();
   });
 
   describe("rendering", () => {

@@ -15,6 +15,9 @@ describe("mealStore", () => {
       historyMeal: null,
       historiesMeal: [],
     });
+  });
+
+  afterEach(() => {
     localStorage.clear();
   });
 

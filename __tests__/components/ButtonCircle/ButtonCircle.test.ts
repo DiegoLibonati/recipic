@@ -37,6 +37,7 @@ const renderComponentWithProps = (
 describe("ButtonCircle", () => {
   afterEach(() => {
     document.body.innerHTML = "";
+    jest.clearAllMocks();
   });
 
   describe("rendering", () => {
