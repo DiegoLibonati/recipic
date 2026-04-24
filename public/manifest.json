@@ -1,7 +1,7 @@
 {
   "name": "Recipic",
   "short_name": "Recipic",
-  "description": "Recipic is a meal discovery app that presents recipes in a visual, story-like interface inspired by Instagram Stories. Instead of scrolling through long lists, you browse one meal at a time — each one displayed as a full image card that takes center stage.",
+  "description": "Recipic is a meal discovery app that presents recipes in a visual, story-like interface inspired by Instagram Stories.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
