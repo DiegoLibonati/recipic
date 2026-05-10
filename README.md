@@ -6,15 +6,6 @@ This project was created primarily for **educational and learning purposes**.
 While it is well-structured and could technically be used in production, it is **not intended for commercialization**.  
 The main goal is to explore and demonstrate best practices, patterns, and technologies in software development.
 
-## Getting Started
-
-1. Clone the repository
-2. Navigate to the project folder
-3. Execute: `npm install`
-4. Execute: `npm run dev`
-
-The application will open automatically at `http://localhost:3000`
-
 ## Description
 
 **Recipic** is a meal discovery app that presents recipes in a visual, story-like interface inspired by Instagram Stories. Instead of scrolling through long lists, you browse one meal at a time — each one displayed as a full image card that takes center stage.
@@ -35,6 +26,8 @@ The UI reacts to state changes in real time: adding or removing a meal updates t
 
 ## Technologies used
 
+To deliver this experience, the project is built on a vanilla TypeScript stack — no framework — bundled with Vite and styled with TailwindCSS.
+
 1. Typescript
 2. TailwindCSS
 3. HTML5
@@ -42,6 +35,8 @@ The UI reacts to state changes in real time: adding or removing a meal updates t
 5. Vite
 
 ## Libraries used
+
+On top of the core stack, the following libraries support HTTP communication, testing, and tooling:
 
 #### Dependencies
 
@@ -76,11 +71,21 @@ The UI reacts to state changes in real time: adding or removing a meal updates t
 "vite": "^7.1.5"
 ```
 
-## Portfolio Link
+## Getting Started
 
-[`https://www.diegolibonati.com.ar/#/project/recipic`](https://www.diegolibonati.com.ar/#/project/recipic)
+With the stack defined, follow these steps to run the project locally:
+
+1. Clone the repository
+2. Navigate to the project folder
+3. Copy `.env.example` to `.env` and set `VITE_API_URL=https://www.themealdb.com`
+4. Execute: `npm install`
+5. Execute: `npm run dev`
+
+The application will open automatically at `http://localhost:3000`.
 
 ## Testing
+
+Once the app runs locally, you can verify behavior with the test suite.
 
 1. Navigate to the project folder
 2. Execute: `npm test`
@@ -91,7 +96,9 @@ For coverage report:
 npm run test:coverage
 ```
 
-## Security
+## Security Audit
+
+Beyond functional tests, dependencies should be scanned regularly for known vulnerabilities.
 
 ### npm audit
 
@@ -104,3 +111,7 @@ npm audit
 ## Known Issues
 
 None at the moment.
+
+## Portfolio Link
+
+[`https://www.diegolibonati.com.ar/#/project/recipic`](https://www.diegolibonati.com.ar/#/project/recipic)
