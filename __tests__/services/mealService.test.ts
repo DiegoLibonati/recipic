@@ -1,75 +1,49 @@
-import { isAxiosError } from "axios";
+import { http, HttpResponse } from "msw";
 
 import mealService from "@/services/mealService";
-import { apiMeals } from "@/services/axios";
 
 import { mockMeals, mockMealsSearchByName } from "@tests/__mocks__/meals.mock";
-
-const mockApiGet = jest.mocked(apiMeals.get);
-const mockIsAxiosError = jest.mocked(isAxiosError);
-
-jest.mock("axios", () => ({
-  ...(jest.requireActual("axios") as unknown as object),
-  isAxiosError: jest.fn(),
-}));
-
-jest.mock("@/services/axios", () => ({
-  apiMeals: {
-    get: jest.fn(),
-  },
-}));
-
-const mockAxiosSuccess = (data: unknown): void => {
-  mockApiGet.mockResolvedValue({ data });
-};
-
-const mockAxiosError = (status: number | undefined, message: string): void => {
-  mockApiGet.mockRejectedValue({
-    response: status !== undefined ? { status } : undefined,
-    message,
-  });
-  mockIsAxiosError.mockReturnValue(true);
-};
-
-const mockAxiosNetworkError = (message = "Network error"): void => {
-  mockApiGet.mockRejectedValue(new Error(message));
-  mockIsAxiosError.mockReturnValue(false);
-};
+import { mockMswServer } from "@tests/__mocks__/mswServer.mock";
 
 describe("mealService", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   describe("getMeal", () => {
     describe("success", () => {
       it("should return an array of meals", async () => {
-        mockAxiosSuccess(mockMeals);
         const result = await mealService.getMeal();
-        expect(result).toEqual(mockMeals.meals);
-      });
 
-      it("should call the /random.php endpoint", async () => {
-        mockAxiosSuccess(mockMeals);
-        await mealService.getMeal();
-        expect(mockApiGet).toHaveBeenCalledWith("/random.php");
+        expect(result).toEqual(mockMeals.meals);
       });
     });
 
     describe("error handling", () => {
-      it("should throw an error with HTTP status when an axios error occurs", async () => {
-        mockAxiosError(500, "Internal Server Error");
+      it("should throw an error with HTTP status when the server responds 500", async () => {
+        mockMswServer.use(
+          http.get("http://localhost/api/json/v1/1/random.php", () => {
+            return new HttpResponse(null, { status: 500 });
+          })
+        );
+
         await expect(mealService.getMeal()).rejects.toThrow("HTTP error!");
       });
 
       it("should include the response status in the error message", async () => {
-        mockAxiosError(503, "Service Unavailable");
+        mockMswServer.use(
+          http.get("http://localhost/api/json/v1/1/random.php", () => {
+            return new HttpResponse(null, { status: 503 });
+          })
+        );
+
         await expect(mealService.getMeal()).rejects.toThrow("503");
       });
 
-      it("should rethrow non-axios errors as-is", async () => {
-        mockAxiosNetworkError("Unknown error");
-        await expect(mealService.getMeal()).rejects.toThrow("Unknown error");
+      it("should throw on network failure", async () => {
+        mockMswServer.use(
+          http.get("http://localhost/api/json/v1/1/random.php", () => {
+            return HttpResponse.error();
+          })
+        );
+
+        await expect(mealService.getMeal()).rejects.toThrow();
       });
     });
   });
@@ -77,42 +51,73 @@ describe("mealService", () => {
   describe("getMealByName", () => {
     describe("success", () => {
       it("should return an array of meals when found", async () => {
-        mockAxiosSuccess(mockMealsSearchByName);
         const result = await mealService.getMealByName("Mandazi");
+
         expect(result).toEqual(mockMealsSearchByName.meals);
       });
 
-      it("should call the /search.php endpoint with the meal name", async () => {
-        mockAxiosSuccess(mockMealsSearchByName);
-        await mealService.getMealByName("Mandazi");
-        expect(mockApiGet).toHaveBeenCalledWith("/search.php?s=Mandazi");
+      it("should return null when no meals match the search", async () => {
+        mockMswServer.use(
+          http.get("http://localhost/api/json/v1/1/search.php", () => {
+            return HttpResponse.json({ meals: null });
+          })
+        );
+
+        const result = await mealService.getMealByName("nonexistent");
+
+        expect(result).toBeNull();
       });
 
-      it("should return null when no meals match the search", async () => {
-        mockAxiosSuccess({ meals: null });
-        const result = await mealService.getMealByName("nonexistent");
-        expect(result).toBeNull();
+      it("should pass the name as a query parameter", async () => {
+        let capturedSearch: string | null = null;
+
+        mockMswServer.use(
+          http.get(
+            "http://localhost/api/json/v1/1/search.php",
+            ({ request }) => {
+              capturedSearch = new URL(request.url).searchParams.get("s");
+              return HttpResponse.json(mockMealsSearchByName);
+            }
+          )
+        );
+
+        await mealService.getMealByName("Mandazi");
+
+        expect(capturedSearch).toBe("Mandazi");
       });
     });
 
     describe("error handling", () => {
-      it("should throw an error with HTTP status when an axios error occurs", async () => {
-        mockAxiosError(404, "Not Found");
+      it("should throw an error with HTTP status when the server responds 404", async () => {
+        mockMswServer.use(
+          http.get("http://localhost/api/json/v1/1/search.php", () => {
+            return new HttpResponse(null, { status: 404 });
+          })
+        );
+
         await expect(mealService.getMealByName("test")).rejects.toThrow(
           "HTTP error!"
         );
       });
 
       it("should include the response status in the error message", async () => {
-        mockAxiosError(404, "Not Found");
+        mockMswServer.use(
+          http.get("http://localhost/api/json/v1/1/search.php", () => {
+            return new HttpResponse(null, { status: 404 });
+          })
+        );
+
         await expect(mealService.getMealByName("test")).rejects.toThrow("404");
       });
 
-      it("should rethrow non-axios errors as-is", async () => {
-        mockAxiosNetworkError("Network failure");
-        await expect(mealService.getMealByName("test")).rejects.toThrow(
-          "Network failure"
+      it("should throw on network failure", async () => {
+        mockMswServer.use(
+          http.get("http://localhost/api/json/v1/1/search.php", () => {
+            return HttpResponse.error();
+          })
         );
+
+        await expect(mealService.getMealByName("test")).rejects.toThrow();
       });
     });
   });
