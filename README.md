@@ -98,18 +98,6 @@ For coverage report:
 npm run test:coverage
 ```
 
-## Security Audit
-
-Beyond functional tests, dependencies should be scanned regularly for known vulnerabilities.
-
-### npm audit
-
-Check for vulnerabilities in dependencies:
-
-```bash
-npm audit
-```
-
 ## Continuous Integration
 
 The repository ships with a **GitHub Actions** pipeline defined in [`.github/workflows/ci.yml`](.github/workflows/ci.yml). It runs automatically on every `push` and `pull_request` targeting the `main` branch.
@@ -156,6 +144,18 @@ npm run test
 
 # build
 npm run build
+```
+
+## Security Audit
+
+Beyond functional tests, dependencies should be scanned regularly for known vulnerabilities.
+
+### npm audit
+
+Check for vulnerabilities in dependencies:
+
+```bash
+npm audit
 ```
 
 ## Known Issues
